@@ -1,0 +1,6 @@
+{
+  "parent": "block/hopper",
+  "textures": {
+    "inside": "stickyhopper:block/sticky_hopper_inside"
+  }
+}

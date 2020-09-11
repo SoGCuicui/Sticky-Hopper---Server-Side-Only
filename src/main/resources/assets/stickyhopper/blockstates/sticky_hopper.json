@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "stickyhopper:block/sticky_hopper"
+    },
+    "facing=north": {
+      "model": "stickyhopper:block/sticky_hopper_side"
+    },
+    "facing=east": {
+      "model": "stickyhopper:block/sticky_hopper_side",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "stickyhopper:block/sticky_hopper_side",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "stickyhopper:block/sticky_hopper_side",
+      "y": 270
+    }
+  }
+}

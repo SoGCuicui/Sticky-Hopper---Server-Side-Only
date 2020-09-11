@@ -1,0 +1,16 @@
+{
+  "mappings": {
+    "ovh/cuicui/stickyhopper/mixin/HopperBlockEntityMixin": {
+      "extract(Lnet/minecraft/block/entity/Hopper;Lnet/minecraft/inventory/Inventory;ILnet/minecraft/util/math/Direction;)Z": "Lnet/minecraft/class_2614;method_11261(Lnet/minecraft/class_2615;Lnet/minecraft/class_1263;ILnet/minecraft/class_2350;)Z",
+      "insert": "Lnet/minecraft/class_2614;method_11246()Z"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "ovh/cuicui/stickyhopper/mixin/HopperBlockEntityMixin": {
+        "extract(Lnet/minecraft/block/entity/Hopper;Lnet/minecraft/inventory/Inventory;ILnet/minecraft/util/math/Direction;)Z": "Lnet/minecraft/class_2614;method_11261(Lnet/minecraft/class_2615;Lnet/minecraft/class_1263;ILnet/minecraft/class_2350;)Z",
+        "insert": "Lnet/minecraft/class_2614;method_11246()Z"
+      }
+    }
+  }
+}
