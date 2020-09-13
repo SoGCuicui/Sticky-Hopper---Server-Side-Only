@@ -1,3 +1,0 @@
-v1	named	intermediary
-METHOD	ovh/cuicui/stickyhopper/mixin/HopperBlockEntityMixin	()Lnet/minecraft/inventory/Inventory;	getOutputInventory	method_11255
-METHOD	ovh/cuicui/stickyhopper/mixin/HopperBlockEntityMixin	(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/util/math/Direction;)Z	isInventoryFull	method_11258

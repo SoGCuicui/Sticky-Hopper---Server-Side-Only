@@ -1,8 +1,0 @@
-ovh/cuicui/stickyhopper/StickyHopperBlockEntity.java
- ovh.cuicui.stickyhopper.StickyHopperBlockEntity
-ovh/cuicui/stickyhopper/Main.java
- ovh.cuicui.stickyhopper.Main
-ovh/cuicui/stickyhopper/mixin/HopperBlockEntityMixin.java
- ovh.cuicui.stickyhopper.mixin.HopperBlockEntityMixin
-ovh/cuicui/stickyhopper/StickyHopperBlock.java
- ovh.cuicui.stickyhopper.StickyHopperBlock
