@@ -1,0 +1,6 @@
+{
+  "parent": "item/hopper",
+  "textures": {
+    "layer0": "stickyhopper:item/sticky_hopper"
+  }
+}

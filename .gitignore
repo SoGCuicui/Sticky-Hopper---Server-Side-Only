@@ -1,0 +1,7 @@
+/.idea/
+/.gradle/
+/build/
+!/build/libs/
+!/build/libs/*.jar
+/build/libs/*-dev.jar
+/run/
