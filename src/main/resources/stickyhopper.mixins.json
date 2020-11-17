@@ -4,7 +4,8 @@
   "package": "ovh.cuicui.stickyhopper.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "HopperBlockEntityMixin"
+    "HopperBlockEntityMixin",
+    "RedstoneWireBlockMixin"
   ],
   "client": [
   ],
