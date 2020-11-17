@@ -11,7 +11,7 @@ public class Main implements ModInitializer {
 	private static String STICKY_HOPPER_ID = "stickyhopper:sticky_hopper";
 	private static String STICKY_HOPPER_ENTITY_ID = "stickyhopper:sticky_hopper_entity";
 
-	private static final StickyHopperBlock STICKY_HOPPER_BLOCK = new StickyHopperBlock();
+	public static final StickyHopperBlock STICKY_HOPPER_BLOCK = new StickyHopperBlock();
 	public static final BlockEntityType<StickyHopperBlockEntity> STICKY_HOPPER_BLOCK_ENTITY = BlockEntityType.Builder.create(StickyHopperBlockEntity::new, STICKY_HOPPER_BLOCK).build(null);
 
 	@Override
