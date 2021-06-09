@@ -14,13 +14,13 @@ It has been designed to be used as a filter. Simple, small, stuckable, redstone-
 But as soon as there is a second item in a slot, they are counted as 2/64 (or 2/16, or whatever the maximum stack is for this type of item), not as 1/63 (nor 1/15).
 Other unique items are still ignored though.
 
-Please note that the time to transfer a stack of items through a line of sticky hoppers is the same as for normal hoppers (8 game ticks per actions).  
+Please note that the time to transfer a stack of items through a line of sticky hoppers is the same as for normal hoppers (8 game ticks per transfer).  
 But since sticky hoppers keep one item each, they do not actually transfer anything until they have a second item in one of their inventory slots.
 
 
 ## Craft
 
-A honey bottle on top of a normal hopper. That's it! ¯\_(ツ)_/¯  
+A honey bottle on top of a normal hopper. That's it! ¯\\\_(ツ)\_/¯  
 Of course, it gives the empty bottle back!
 
 
@@ -34,6 +34,8 @@ All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), th
 `%appdata%\.minecraft\mods` — and press *Enter*.)
 
 This mod is not customizable.  
-It is translated in English (Australia, Canada, UK, USA) and French (Canada, France).
+It is translated in English and French.
 
-I don't plan to adapt it for another launcher than Fabric.
+I don't plan to adapt it for another modloader than Fabric.
+
+*Hope you'll find this mod usefull!* ♥
