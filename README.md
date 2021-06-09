@@ -29,8 +29,11 @@ Of course, it gives the empty bottle back!
 This mod is for both clients and servers!  
 As it adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the sticky hopper.
 
-All you need is, of course, the [Fabric](https://fabricmc.net/use/) launcher, the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
-(For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window:
-`%appdata%\.minecraft\mods` - and press *Enter*.)
+All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
+(For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder:  
+`%appdata%\.minecraft\mods` — and press *Enter*.)
 
-This mod is not customizable.
+This mod is not customizable.  
+It is translated in English (Australia, Canada, UK, USA) and French (Canada, France).
+
+I don't plan to adapt it for another launcher than Fabric.
