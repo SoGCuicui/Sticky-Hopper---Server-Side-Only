@@ -16,8 +16,9 @@ import ovh.cuicui.stickyhopper.Main;
 public abstract class RedstoneWireBlockMixin extends Block {
     public RedstoneWireBlockMixin(AbstractBlock.Settings settings) { super(settings); }
 
+    // Redstone Dust, Repeaters and Comparators should be able to be placed on top of Sticky Hoppers
     @Inject(method = "canRunOnTop", at = @At("RETURN"), cancellable = true)
-    private void sh_canRunOnStickyHoppers(BlockView world, BlockPos pos, BlockState floor, CallbackInfoReturnable<Boolean> info) {
+    private void sh_canRunOnTop_return(BlockView world, BlockPos pos, BlockState floor, CallbackInfoReturnable<Boolean> info) {
         if (floor.isOf(Main.STICKY_HOPPER_BLOCK)) {
             info.setReturnValue(true);
             info.cancel();
