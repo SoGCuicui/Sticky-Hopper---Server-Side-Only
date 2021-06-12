@@ -9,8 +9,8 @@
     "Cuicui"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "git@dev.cuicui.ovh:minecraft/sticky-hopper.git"
+    "homepage": "https://dev.cuicui.ovh/minecraft",
+    "sources": "https://dev.cuicui.ovh/minecraft/sticky-hopper"
   },
 
   "license": "CC0-1.0",
@@ -27,11 +27,9 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.7.4",
+    "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "flamingo": "*"
+    "minecraft": "1.17.x",
+    "java": ">=16"
   }
 }
