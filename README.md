@@ -38,7 +38,7 @@ As it adds a new block, if you want to use it on a server, clients should have i
 All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
 
-Sticky hoppers are not customizable.
+Sticky Hoppers are not customizable.
 
 
 ## Miscellaneous
