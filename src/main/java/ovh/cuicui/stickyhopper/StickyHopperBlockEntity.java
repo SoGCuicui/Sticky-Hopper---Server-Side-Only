@@ -6,15 +6,13 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 public class StickyHopperBlockEntity extends HopperBlockEntity {
-    public static String CONTAINER = "container.sticky_hopper";
-
     public StickyHopperBlockEntity() {
         super();
     }
 
     @Override
     protected Text getContainerName() {
-        return new TranslatableText(CONTAINER);
+        return new TranslatableText(Main.STICKY_HOPPER_CONTAINER_ID);
     }
 
     @Override
