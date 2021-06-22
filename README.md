@@ -25,9 +25,9 @@ A Honey Bottle on top of a normal Hopper. That's it! ¯\\\_(ツ)\_/¯
 ![](https://media.forgecdn.net/attachments/373/562/sticky_hopper_craft.png)  
 Of course, it gives the empty Glass Bottle back!
 
-It is also possible to clean up a Sticky Hopper, just place a Ghast Tear on top of it.  
-![](https://media.forgecdn.net/attachments/373/563/hopper_craft.png)  
-*Didn't you know that a Ghast tear cleans honey much better than a water bucket? The legend says that it is because the latter is not stackable!*
+It is also possible to clean up a Sticky Hopper, just place a Snowball on top of it.  
+![](https://media.forgecdn.net/attachments/374/102/hopper_craft.png)  
+*Didn't you know that snow cleans honey much better than a water bucket? The legend says that it is because the latter is not stackable!*
 
 
 ## Installation
@@ -38,7 +38,7 @@ As it adds a new block, if you want to use it on a server, clients should have i
 All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
 
-Sticky hoppers are not customizable.
+Sticky Hoppers are not customizable.
 
 
 ## Miscellaneous
