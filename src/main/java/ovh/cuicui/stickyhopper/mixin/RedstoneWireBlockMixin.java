@@ -14,7 +14,9 @@ import ovh.cuicui.stickyhopper.Main;
 
 @Mixin(RedstoneWireBlock.class)
 public abstract class RedstoneWireBlockMixin extends Block {
-    public RedstoneWireBlockMixin(AbstractBlock.Settings settings) { super(settings); }
+    public RedstoneWireBlockMixin(AbstractBlock.Settings settings) {
+        super(settings);
+    }
 
     // Redstone Dust should be able to be placed on top of Sticky Hoppers
     @Inject(method = "canRunOnTop", at = @At("RETURN"), cancellable = true)
