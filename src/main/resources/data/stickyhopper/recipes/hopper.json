@@ -2,11 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "group": "redstone",
   "pattern": [
-    "T",
+    "S",
     "H"
   ],
   "key": {
-    "T": {
+    "S": {
       "item": "minecraft:snowball"
     },
     "H": {
