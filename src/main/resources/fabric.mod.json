@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Sticky Hopper",
-  "description": "Mod allowing hoppers to be sticky - can help to have redstone-less filters!",
+  "description": "Mod allowing hoppers to be sticky!",
   "authors": [
     "Cuicui"
   ],

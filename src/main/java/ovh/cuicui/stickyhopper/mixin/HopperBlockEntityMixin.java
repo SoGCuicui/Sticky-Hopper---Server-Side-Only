@@ -18,41 +18,36 @@ import ovh.cuicui.stickyhopper.StickyHopperBlockEntity;
 
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntity {
-    public HopperBlockEntityMixin(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
-        super(blockEntityType, blockPos, blockState);
-    }
+    public HopperBlockEntityMixin(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) { super(blockEntityType, blockPos, blockState); }
 
-    // A Hopper (Sticky or not) can extract an item from a slot of Sticky Hopper above only if it is a not stackable item, or if there is more than one items
-    // "hopper" is the exacting one, "inventory" is the inventory above
+    // A Hopper (Sticky or not) can extract an item from a slot of Sticky Hopper above only if there is more than one items
+    // "hopper" is the extracting one, "inventory" is the inventory above it
     @Inject(method = "extract(Lnet/minecraft/block/entity/Hopper;Lnet/minecraft/inventory/Inventory;ILnet/minecraft/util/math/Direction;)Z", at = @At("HEAD"), cancellable = true)
     private static void sh_extract_head(Hopper hopper, Inventory inventory, int slot, Direction side, CallbackInfoReturnable<Boolean> info) {
-        ItemStack itemStack = inventory.getStack(slot);
-        if (inventory instanceof StickyHopperBlockEntity && itemStack.getMaxCount() > 1 && itemStack.getCount() <= 1) {
+        if (inventory instanceof StickyHopperBlockEntity && inventory.getStack(slot).getCount() <= 1) {
             info.setReturnValue(false);
             info.cancel();
         }
     }
 
-    // A Sticky Hopper can insert an item to the next inventory only if it is a not stackable item, or if there is more than one items
-    // /!\ Redirects "if (!this.getStack(i).isEmpty())" (the test is inverted!)
-    // Also, it is not possible to redirect "isEmpty", because the "insert" method became static, and so we cannot use "this.getType" anymore! By redirecting "getStack", we can check the instance of "inventory", at least.
-    /*@Redirect(method = "insert", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;isEmpty()Z", ordinal = 0))
-    private static boolean sh_insert_isEmpty(ItemStack itemStack) {
-        return (itemStack.isEmpty() || (this.getType() == Main.STICKY_HOPPER_BLOCK_ENTITY && itemStack.getMaxCount() > 1 && itemStack.getCount() == 1));
-    }*/
+    // A Sticky Hopper can insert an item to the next inventory only if there is more than one items in a slot
+    // 1.17: we cannot access "isEmpty" directly as "insert" is now static and so we cannot use "this.getType" anymore!
     @Redirect(method = "insert", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Inventory;getStack(I)Lnet/minecraft/item/ItemStack;", ordinal = 0))
     private static ItemStack sh_insert_getStack(Inventory inventory, int slot) {
         ItemStack itemStack = inventory.getStack(slot);
-        return ((itemStack.isEmpty() || (inventory instanceof StickyHopperBlockEntity && itemStack.getMaxCount() > 1 && itemStack.getCount() == 1)) ? new ItemStack(null, 0) : itemStack);
+        if (inventory instanceof StickyHopperBlockEntity && itemStack.getCount() == 1) {
+            return (ItemStack.EMPTY);
+        }
+        return (itemStack);
     }
 
-    // Destination Sticky Hopper must be considered as empty even if there is still one stackable item in each slots, so its cooldown is properly reset
+    // Destination Sticky Hopper must be considered as empty even if there is still one item in each slots, so its cooldown is properly reset
     @Redirect(method = "transfer(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/inventory/Inventory;Lnet/minecraft/item/ItemStack;ILnet/minecraft/util/math/Direction;)Lnet/minecraft/item/ItemStack;", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Inventory;isEmpty()Z", ordinal = 0))
     private static boolean sh_transfer_isEmpty(Inventory inventory) {
         if (inventory instanceof StickyHopperBlockEntity) {
             for (int i = 0; i < inventory.size(); ++i) {
                 ItemStack itemStack = inventory.getStack(i);
-                if (itemStack.getMaxCount() == 1 || itemStack.getCount() > 1) {
+                if (itemStack.getCount() > 1) {
                     return (false);
                 }
             }

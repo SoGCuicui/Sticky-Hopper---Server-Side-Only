@@ -11,9 +11,9 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
 
 public class Main implements ModInitializer {
-	private static String STICKY_HOPPER_ID = "stickyhopper:sticky_hopper";
-	private static String STICKY_HOPPER_ENTITY_ID = "stickyhopper:sticky_hopper_entity";
-
+	private static final String STICKY_HOPPER_ID = "stickyhopper:sticky_hopper";
+	private static final String STICKY_HOPPER_ENTITY_ID = "stickyhopper:sticky_hopper_entity";
+	public static final String STICKY_HOPPER_CONTAINER_ID = "container.sticky_hopper";
 	public static final StickyHopperBlock STICKY_HOPPER_BLOCK = new StickyHopperBlock(FabricBlockSettings.copy(Blocks.HOPPER));
 	public static BlockEntityType<StickyHopperBlockEntity> STICKY_HOPPER_BLOCK_ENTITY;
 
