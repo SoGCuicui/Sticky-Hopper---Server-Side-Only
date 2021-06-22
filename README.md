@@ -54,6 +54,7 @@ I don't plan to adapt it for another modloader than Fabric.
  
 ### Versions
 
+2.2 - Cleaning craft simplified
 2.1 - Non-stackable items can finally be retained (but not filtered); Clean up craft added  
 2.0 - Comparators management; Transfer cooldown bugfix  
 1.0 - Initial project with operational Sticky Hoppers
