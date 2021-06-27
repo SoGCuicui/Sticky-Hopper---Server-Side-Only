@@ -61,3 +61,9 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 2.1 - Non-stackable items can finally be retained (but not filtered); Clean up craft added  
 2.0 - Comparators management; Transfer cooldown bugfix  
 1.0 - Initial project with operational Sticky Hoppers
+
+
+### Known Incompatibilities
+
+- Lithium (1.17 only): Hoppers optimisations added in Lithium make Sticky Hoppers act like normal Hoppers!  
+  I intend to work on this problem later. In the meantime, please disable these optimizations by adding `mixin.block.hopper=false` in "config/lithium.properties".
