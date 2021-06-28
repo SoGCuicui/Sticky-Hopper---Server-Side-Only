@@ -25,7 +25,7 @@ A Honey Bottle on top of a normal Hopper. That's it! ¯\\\_(ツ)\_/¯
 ![](https://media.forgecdn.net/attachments/373/562/sticky_hopper_craft.png)  
 Of course, it gives the empty Glass Bottle back!
 
-It is also possible to clean up a Sticky Hopper, just place a Ghast Tear on top of it.  
+It is also possible to clean up a Sticky Hopper, just place a Snowball on top of it.  
 ![](https://media.forgecdn.net/attachments/374/102/hopper_craft.png)  
 *Didn't you know that snow cleans honey much better than a water bucket? The legend says that it is because the latter is not stackable!*
 
