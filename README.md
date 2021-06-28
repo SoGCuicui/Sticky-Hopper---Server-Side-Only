@@ -33,7 +33,7 @@ It is also possible to clean up a Sticky Hopper, just place a Snowball on top of
 ## Installation
 
 This mod is for both clients and servers!  
-As it adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the sticky hopper.
+As it adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the Sticky Hopper.
 
 All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
