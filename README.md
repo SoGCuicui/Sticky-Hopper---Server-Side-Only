@@ -8,7 +8,7 @@
 ## Features
 
 **Sticky Hopper** — which is obviously a new block added by this mod — simply never empties completely, but retains a single item in each of its inventory slots instead.  
-It has been designed to be used as a filter. Simple, small, stuckable, redstone-less filter!
+It has been designed to be used as a filter. Simple, small, sliceable, redstone-less filter!
 
 **Comparators** checking for Sticky Hopper content ignore all items which are in a single copy per inventory slot.  
 But as soon as there is a second item in a slot, they are counted as 2/64 (or 2/16, or whatever the maximum stack is for this type of item), not as 1/63 (nor 1/15).
@@ -66,4 +66,4 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 ### Known Incompatibilities
 
 - Lithium (1.17 only): Hoppers optimisations added in Lithium make Sticky Hoppers act like normal Hoppers!  
-  I intend to work on this problem later. In the meantime, please disable these optimizations by adding `mixin.block.hopper=false` in "config/lithium.properties".
+  I intend to work on this problem anytime soon. In the meantime, my mod forces to disable these optimizations for version 1.17.1 (if you are using it for 1.17, just add `mixin.block.hopper=false` in "config/lithium.properties" yourself).
