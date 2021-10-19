@@ -1,4 +1,8 @@
 {
   "block.stickyhopper.sticky_hopper": "Entonnoir collant",
-  "container.sticky_hopper": "Entonnoir collant"
+  "container.sticky_hopper": "Entonnoir collant",
+
+  "text.autoconfig.sticky_hopper.title": "Configuration des entonnoirs collants",
+  "text.autoconfig.sticky_hopper.option.nonstackable_filter": "Éléments non empilables filtrables ?",
+  "sticky_hopper.tooltip.nonstackable_filter": "Voici la \"recette\" pour filtrer ces types d'éléments :\n- Un Crochet dans les emplacements 1 & 5\n- Une Ficelle dans les emplacements 2 & 4\n- L'élément à filtrer dans l'emplacement du centre"
 }

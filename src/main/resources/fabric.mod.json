@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "ovh.cuicui.stickyhopper.Main"
+    ],
+    "modmenu": [
+      "ovh.cuicui.stickyhopper.Menu"
     ]
   },
   "mixins": [
