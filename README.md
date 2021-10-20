@@ -23,21 +23,34 @@ But since Sticky Hoppers keep one item each, they do not actually transfer anyth
 
 ### Advanced
 
-**Since version 3.0** for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!  
-Though, you'll need some extra items to make kind of a recipe inside the hopper (see the image below), and a single Sticky Hopper will be able to sort only one non-stackable item type!  
+**Since version 3.0** for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!
+
+Though, a single Sticky Hopper will be able to sort only one non-stackable item type, and you'll need some extra ingredients to make kind of a "recipe" inside its inventory!  
 Moreover, this is a customizable option that is disabled by default!  
-Indeed, the initial idea behind this hopper is to have a vanilla-friendly behavior, and adding the ability of sorting non-stackable items is quite overkill!
+Indeed, the initial idea behind this Hopper is to have a vanilla-friendly behavior, and adding the ability of sorting non-stackable items is quite overkill!
 
-To activate it, you have to edit the "config/sticky_hopper.toml" file and set `nonstackable_filter` to `true`. On a single player session, you can also use [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) in-game settings screen.  
-Then, you have to configure your hopper by placing the item you want to filter like so:  
-... img ...  
+
+#### Customization
+
+To activate it, you have to edit the `config/sticky_hopper.toml` file. On a single player session, you can also use [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) to change the two firsts options in-game, on-the-fly.  
+Here are the available options, with their default values:
+- `nsif_enabled = false` - Controls if the "Non-Stackable Items Filter" is disabled (default), or enabled (`true`),
+- `nsif_ignores_durability = false` - By default, incoming items with a different durability than the item in the Hopper will not be filtered, turning this option to `true` will allow all items of the same type (and material) to be filtered,
+- `nsif_observed_slot = 2` - Index, starting from 0, of the slot where the item to be filtered should be placed in the Sticky Hopper inventory,
+- `nsif_recipe_slots = ["minecraft:tripwire_hook", "minecraft:string", "", "minecraft:string", "minecraft:tripwire_hook"]` - An array representing the list of ingredients in the recipe (the `nsif_observed_slot` index will be ignored).
+
+
+#### Usage
+
+You have to configure your Sticky Hoppers by placing the item you want to filter like so (adapt this to your `nsif_recipe_slots` array):  
+![](https://media.forgecdn.net/attachments/402/360/non-stackable_items_filter_recipe.png)  
 Use only one Tripwire Hook and one String on both sides of your item!  
-If you do so, incoming Hooks and Strings will be ignored, and non-stackable items identical to the one in the center will be transferred, regardless of their durability, at Hopper speed!
+If you do so, the non-stackable item in the center will be transferred every time another identical item will take its place, at Hopper speed!
 
-
-******************** Noter qu'il faut que le sticky hopper pointe un inventaire avec une place de libre pour que l'item puisse sortir,
-******************** un hopper en dessous (dans lequel le sticky hopper ne pointe pas) ne suffit pas !
-
+Notes:
+- The Sticky Hopper **must** be able to insert the item into an inventory (another Hopper, a Chest, a Dropper...) to accept the transfer, a Hopper placed below will not be able to pick up anything unless the Sticky Hopper points toward it.
+- New incoming Tripwire Hooks and Strings will be ignored by this Hopper.
+- Enchantments of the item to be filtered are ignored. (Its durability is not ignored by default, this is customizable.)
 
 
 ## Craft

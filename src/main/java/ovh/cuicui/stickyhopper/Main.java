@@ -1,9 +1,7 @@
 package ovh.cuicui.stickyhopper;
 
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
-import me.shedaniel.clothconfig2.gui.entries.TooltipListEntry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -13,8 +11,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.registry.Registry;
-
-import java.util.stream.Collectors;
 
 public class Main implements ModInitializer {
 	private static final String STICKY_HOPPER_ID = "stickyhopper:sticky_hopper";
@@ -32,13 +28,6 @@ public class Main implements ModInitializer {
 		STICKY_HOPPER_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, STICKY_HOPPER_ENTITY_ID, FabricBlockEntityTypeBuilder.create(StickyHopperBlockEntity::new, STICKY_HOPPER_BLOCK).build(null));
 
 		AutoConfig.register(Configuration.class, Toml4jConfigSerializer::new);
-		GuiRegistry registry = AutoConfig.getGuiRegistry(Configuration.class);
-		registry.registerAnnotationTransformer(
-				(guis, i13n, field, config, defaults, guiProvider) -> guis.stream().peek(gui -> {
-					if (gui instanceof TooltipListEntry<?>)
-						((TooltipListEntry<?>) gui).setTooltipSupplier(() -> Configuration.splitTooltipKey("sticky_hopper.tooltip.nonstackable_filter"));
-				}).collect(Collectors.toList()), Configuration.NonStackableFilterTooltip.class
-		);
 		config = AutoConfig.getConfigHolder(Configuration.class).getConfig();
 
 		System.out.println("Sticky Hopper mod loaded!");

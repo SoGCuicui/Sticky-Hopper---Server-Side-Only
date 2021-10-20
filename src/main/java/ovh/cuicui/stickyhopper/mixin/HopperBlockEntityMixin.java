@@ -1,15 +1,17 @@
 package ovh.cuicui.stickyhopper.mixin;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.Hopper;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,14 +57,17 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     @Inject(method = "transfer(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/inventory/Inventory;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/math/Direction;)Lnet/minecraft/item/ItemStack;", at = @At("HEAD"), cancellable = true)
     private static void sh_transfer_head(@Nullable Inventory from, Inventory to, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<ItemStack> info) {
         // This "recipe" requires only one item on each slot, so we can use the overridden to.isEmpty() method in this test
-        if (to instanceof StickyHopperBlockEntity && Main.config.nonstackable_filter
-         && to.getStack(0).isOf(Items.TRIPWIRE_HOOK) && to.getStack(1).isOf(Items.STRING)
-         && to.getStack(4).isOf(Items.TRIPWIRE_HOOK) && to.getStack(3).isOf(Items.STRING)
-         && to.getStack(2).getMaxCount() == 1 && to.isEmpty()) {
-            // If the incoming item is stackable, we must ignore it so new Tripwire Hooks and Strings won't be merged
-            // Of course, if it's different from the item in the center, we ignore it as well
-            if (stack.getMaxCount() > 1 || !stack.isOf(to.getStack(2).getItem())) {
-                info.setReturnValue(stack); // Item rejected, transfer canceled
+        // Also, the sticky hopper must not to be blocked, otherwise it would normally accept an inserted item (from another hopper) and so we would be forced to accept the transfer
+        if (to instanceof StickyHopperBlockEntity && Main.config.nsif_enabled && to.isEmpty() && ((StickyHopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED)) {
+            int filterSlot = Main.config.nsif_observed_slot;
+            for (int index = 0; index < to.size(); ++index) {
+                if ((index != filterSlot && !to.getStack(index).isOf(Registry.ITEM.get(new Identifier(Main.config.nsif_recipe_slots[index])))) || (index == filterSlot && to.getStack(index).getMaxCount() > 1)) {
+                    return; // Wrong recipe, continue normal execution
+                }
+            }
+
+            if (stack.getMaxCount() > 1 || !stack.isOf(to.getStack(filterSlot).getItem()) || (!Main.config.nsif_ignores_durability && stack.getDamage() != to.getStack(filterSlot).getDamage())) {
+                info.setReturnValue(stack); // Incoming item rejected, transfer canceled
                 return;
             }
 
@@ -72,11 +77,11 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
 
             // Last but not least, if the non-stackable item can't be inserted to another inventory we cancel the transfer, otherwise the item would get lost
             if (!nonStackableInserted) {
-                info.setReturnValue(stack); // Item rejected, transfer canceled
+                info.setReturnValue(stack); // Transfer canceled
                 return;
             }
-            to.setStack(2, stack);
-            info.setReturnValue(ItemStack.EMPTY); // Item accepted, transfer done
+            to.setStack(filterSlot, stack);
+            info.setReturnValue(ItemStack.EMPTY); // Incoming item accepted, transfer done
         }
     }
 }

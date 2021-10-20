@@ -3,6 +3,7 @@
   "container.sticky_hopper": "Sticky Hopper",
 
   "text.autoconfig.sticky_hopper.title": "Sticky Hoppers Configuration",
-  "text.autoconfig.sticky_hopper.option.nonstackable_filter": "Enable Non-Stackable Items Filter?",
-  "sticky_hopper.tooltip.nonstackable_filter": "Here is the \"recipe\" for filtering this type of items:\n- One Tripwire Hook in each slots 1 & 5\n- One String in each slots 2 & 4\n- The item to filter in the center slot"
+  "text.autoconfig.sticky_hopper.option.nsif_enabled.@PrefixText": "Here is the default \"recipe\" for filtering non-stackable items:\n- One Tripwire Hook in each slots 1 and 5,\n- One String in each slots 2 and 4,\n- The item to filter in the center slot.\nThis recipe can be edited directly in the configuration file.",
+  "text.autoconfig.sticky_hopper.option.nsif_enabled": "Enable Non-Stackable Items Filter?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignores_durability": "This Filter Ignores Item Durability?"
 }
