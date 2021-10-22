@@ -23,7 +23,7 @@ But since Sticky Hoppers keep one item each, they do not actually transfer anyth
 
 ### Advanced
 
-**Since version 3.0** for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!
+**Since version 3.0**, for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!
 
 Though, a single Sticky Hopper will be able to sort only one non-stackable item type, and you'll need some extra ingredients to make kind of a "recipe" inside its inventory!  
 Moreover, this is a customizable option that is disabled by default!  
@@ -32,12 +32,31 @@ Indeed, the initial idea behind this Hopper is to have a vanilla-friendly behavi
 
 #### Customization
 
-To activate it, you have to edit the `config/sticky_hopper.toml` file. On a single player session, you can also use [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) to change the two firsts options in-game, on-the-fly.  
+To activate it, you have to edit the `config/sticky_hopper.toml` file.  
+On a single player session, you can also use [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) to change the firsts options in-game, on-the-fly.
+
 Here are the available options, with their default values:
 - `nsif_enabled = false` - Controls if the "Non-Stackable Items Filter" is disabled (default), or enabled (`true`),
-- `nsif_ignores_durability = false` - By default, incoming items with a different durability than the item in the Hopper will not be filtered, turning this option to `true` will allow all items of the same type (and material) to be filtered,
-- `nsif_observed_slot = 2` - Index, starting from 0, of the slot where the item to be filtered should be placed in the Sticky Hopper inventory,
-- `nsif_recipe_slots = ["minecraft:tripwire_hook", "minecraft:string", "", "minecraft:string", "minecraft:tripwire_hook"]` - An array representing the list of ingredients in the recipe (the `nsif_observed_slot` index will be ignored).
+- `nsif_allow_nbts_filters = true` - By default, the NBTs (Named Binary Tags) of the incoming items are not strictly compared to those of the item in the Sticky Hopper allowing more precise filter control, turning this to `false` may have kind of side effects that you probably don't want (see **Notes** below for more details),
+- `nsif_ignore_durability = false` - Turn this to `true` with `nsif_allow_nbts_filters` to allow items with different durability to "match" and be filtered,
+- `nsif_ignore_enchantments = false` - Turn this to `true` with `nsif_allow_nbts_filters` to allow items with different enchantments (including no enchantments) to be considered as equals by the filter,
+- `nsif_ignore_name = false` - Turn this to `true` with `nsif_allow_nbts_filters` to sort items with different names together,
+- `nsif_ignore_potions = false` - Turn this to `true` with `nsif_allow_nbts_filters` (and `nsif_ignore_name`, see **Notes** below) to allow different Potions to be considered as equals,
+- `nsif_observed_slot = 2` - (Editable only in the config file) - Index, starting from 0, of the slot where the item to be filtered should be placed in the Sticky Hopper inventory,
+- `nsif_recipe_slots = ["minecraft:tripwire_hook", "minecraft:string", "minecraft:air", "minecraft:string", "minecraft:tripwire_hook"]` - (Editable only in the config file) - An array representing the list of ingredients in the recipe (the `nsif_observed_slot` index will be ignored, by default it is set to `minecraft:air`).
+
+**Notes:**  
+Imagine two swords strictly identical, but you used one and not the other.  
+You repaired the first one so they both have the same durability (in fact, "Damage", equals 0).  
+They actually will not have the same NBTs, because the "RepairCost" will be different!  
+So if Sticky Hoppers are not allowing NBTs filters, these swords will not be filtered!  
+But if NBTs filters are allowed, and durability not ignored, these two swords will match!  
+Same remarks with Enchantments, they also increase the repair cost, so two items remain identical unless you enchant them in different ways (by merging enchantments on one item and not the other for example).  
+There may be other cases — not identified here — involving the same kind of behavior, so it is certainly better to leave `nsif_allow_nbts_filters` to `true`.
+
+Another interesting thing to mention is that short or long Potions of the same type are named the same.  
+So, turning `nsif_ignore_potions` to `true` while keeping `nsif_ignore_name` to `false` will allow you to sort these Potions together.  
+Turning both to `false` will allow only the exact same type of Potions to match, and both to `true` to sort all Potions together.
 
 
 #### Usage
@@ -47,7 +66,7 @@ You have to configure your Sticky Hoppers by placing the item you want to filter
 Use only one Tripwire Hook and one String on both sides of your item!  
 If you do so, the non-stackable item in the center will be transferred every time another identical item will take its place, at Hopper speed!
 
-Notes:
+**Notes:**
 - The Sticky Hopper **must** be able to insert the item into an inventory (another Hopper, a Chest, a Dropper...) to accept the transfer, a Hopper placed below will not be able to pick up anything unless the Sticky Hopper points toward it.
 - New incoming Tripwire Hooks and Strings will be ignored by this Hopper.
 - Enchantments of the item to be filtered are ignored. (Its durability is not ignored by default, this is customizable.)

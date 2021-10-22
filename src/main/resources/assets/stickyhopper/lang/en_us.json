@@ -3,7 +3,16 @@
   "container.sticky_hopper": "Sticky Hopper",
 
   "text.autoconfig.sticky_hopper.title": "Sticky Hoppers Configuration",
-  "text.autoconfig.sticky_hopper.option.nsif_enabled.@PrefixText": "Here is the default \"recipe\" for filtering non-stackable items:\n- One Tripwire Hook in each slots 1 and 5,\n- One String in each slots 2 and 4,\n- The item to filter in the center slot.\nThis recipe can be edited directly in the configuration file.",
-  "text.autoconfig.sticky_hopper.option.nsif_enabled": "Enable Non-Stackable Items Filter?",
-  "text.autoconfig.sticky_hopper.option.nsif_ignores_durability": "This Filter Ignores Item Durability?"
+  "text.autoconfig.sticky_hopper.option.nsif_enabled.@PrefixText": "Here is the default \"recipe\" for filtering non-stackable items:\n- One Tripwire Hook in each slots 1 and 5,\n- One String in each slots 2 and 4,\n- The item to filter in the center slot of Sticky Hopper inventory.\nThis recipe can be edited directly in the configuration file.",
+  "text.autoconfig.sticky_hopper.option.nsif_enabled": "Non-Stackable Items Filter Enabled?",
+  "text.autoconfig.sticky_hopper.option.nsif_allow_nbts_filters": "\"NBTs\" Filters Allowed?",
+  "text.autoconfig.sticky_hopper.option.nsif_allow_nbts_filters.@Tooltip": "Requires Non-Stackable Items Filter to be Enabled",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_durability": "Durability Ignored?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_durability.@Tooltip": "Requires \"NBTs\" Filters to be Allowed",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_enchantments": "Enchantments Ignored?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_enchantments.@Tooltip": "Requires \"NBTs\" Filters to be Allowed",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_name": "Names Ignored?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_name.@Tooltip": "Requires \"NBTs\" Filters to be Allowed",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_potions": "Potion Effects Ignored?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_potions.@Tooltip": "Requires \"NBTs\" Filters to be Allowed and Optionally Names not Ignored"
 }

@@ -15,7 +15,20 @@ public class Configuration implements ConfigData {
     @ConfigEntry.Gui.PrefixText()
     public boolean nsif_enabled = false;
 
-    public boolean nsif_ignores_durability = false;
+    @ConfigEntry.Gui.Tooltip
+    public boolean nsif_allow_nbts_filters = true;
+
+    @ConfigEntry.Gui.Tooltip
+    public boolean nsif_ignore_durability = false;
+
+    @ConfigEntry.Gui.Tooltip
+    public boolean nsif_ignore_enchantments = false;
+
+    @ConfigEntry.Gui.Tooltip
+    public boolean nsif_ignore_name = false;
+
+    @ConfigEntry.Gui.Tooltip
+    public boolean nsif_ignore_potions = false;
 
     @ConfigEntry.Gui.Excluded
     public int nsif_observed_slot = 2;

@@ -31,13 +31,12 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     private static native boolean insert(World world, BlockPos pos, BlockState state, Inventory inventory);
 
     // A Sticky Hopper can insert an item to the next inventory only if there is more than one item in a slot
-    // ≥ 1.17: We cannot access "isEmpty" directly as "insert" is now static, so we cannot use "this.getType" anymore
-    // ≥ v3.0: We allow to insert a non-stackable item from the center slot (#2) if needed (this method is then called a second time from sh_transfer_head below)
+    // ≥ v3.0: We allow to insert a non-stackable item from the slot defined by Main.config.nsif_observed_slot if needed (this method is then called a second time from sh_transfer_head below)
     @Redirect(method = "insert", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Inventory;getStack(I)Lnet/minecraft/item/ItemStack;", ordinal = 0))
     private static ItemStack sh_insert_getStack(Inventory inventory, int slot) {
         ItemStack itemStack = inventory.getStack(slot);
         if (!(inventory instanceof StickyHopperBlockEntity)
-         || (((StickyHopperBlockEntity)inventory).needsNonStackableInsert && slot == 2)
+         || (((StickyHopperBlockEntity)inventory).needsNonStackableInsert && slot == Main.config.nsif_observed_slot)
          || itemStack.getCount() > 1) {
             return (itemStack);
         }
@@ -61,12 +60,21 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
         if (to instanceof StickyHopperBlockEntity && Main.config.nsif_enabled && to.isEmpty() && ((StickyHopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED)) {
             int filterSlot = Main.config.nsif_observed_slot;
             for (int index = 0; index < to.size(); ++index) {
-                if ((index != filterSlot && !to.getStack(index).isOf(Registry.ITEM.get(new Identifier(Main.config.nsif_recipe_slots[index])))) || (index == filterSlot && to.getStack(index).getMaxCount() > 1)) {
+                ItemStack itemStack = to.getStack(index);
+                if ((index != filterSlot && !itemStack.isOf(Registry.ITEM.get(new Identifier(Main.config.nsif_recipe_slots[index]))))
+                 || (index == filterSlot && itemStack.getMaxCount() > 1)) {
                     return; // Wrong recipe, continue normal execution
                 }
             }
 
-            if (stack.getMaxCount() > 1 || !stack.isOf(to.getStack(filterSlot).getItem()) || (!Main.config.nsif_ignores_durability && stack.getDamage() != to.getStack(filterSlot).getDamage())) {
+            ItemStack itemStack = to.getStack(filterSlot);
+
+            if (stack.getMaxCount() > 1 || !stack.isOf(itemStack.getItem())
+             || (!Main.config.nsif_allow_nbts_filters && !ItemStack.areNbtEqual(stack, itemStack))
+             || (!Main.config.nsif_ignore_durability && stack.getDamage() != itemStack.getDamage())
+             || (!Main.config.nsif_ignore_enchantments && !stack.getEnchantments().equals(itemStack.getEnchantments()))
+             || (!Main.config.nsif_ignore_name && !stack.getName().equals(itemStack.getName()))
+             || (!Main.config.nsif_ignore_potions && !stack.getNbt().getString("Potion").equals(itemStack.getNbt().getString("Potion")))) {
                 info.setReturnValue(stack); // Incoming item rejected, transfer canceled
                 return;
             }

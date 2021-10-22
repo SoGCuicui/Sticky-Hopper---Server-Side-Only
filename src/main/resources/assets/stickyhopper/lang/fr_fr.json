@@ -3,7 +3,16 @@
   "container.sticky_hopper": "Entonnoir collant",
 
   "text.autoconfig.sticky_hopper.title": "Configuration des entonnoirs collants",
-  "text.autoconfig.sticky_hopper.option.nsif_enabled.@PrefixText": "Voici la \"recette\" par défaut pour filtrer les éléments non empilables :\n- Un Crochet dans les emplacements 1 et 5,\n- Une Ficelle dans les emplacements 2 et 4,\n- L'élément à filtrer dans l'emplacement du centre.\nCette recette peut être éditée directement dans le fichier de configuration.",
-  "text.autoconfig.sticky_hopper.option.nsif_enabled": "Éléments non empilables filtrables ?",
-  "text.autoconfig.sticky_hopper.option.nsif_ignores_durability": "Ce filtre ignore la durabilité des éléments ?"
+  "text.autoconfig.sticky_hopper.option.nsif_enabled.@PrefixText": "Voici la \"recette\" par défaut pour filtrer les objets non regroupables :\n- Un Crochet dans les emplacements 1 et 5,\n- Une Ficelle dans les emplacements 2 et 4,\n- L'objet à filtrer au centre de l'inventaire de l'entonnoir collant.\nCette recette peut être éditée directement dans le fichier de configuration.",
+  "text.autoconfig.sticky_hopper.option.nsif_enabled": "Objets non regroupables filtrables ?",
+  "text.autoconfig.sticky_hopper.option.nsif_allow_nbts_filters": "Filtres par \"NBTs\" autorisés ?",
+  "text.autoconfig.sticky_hopper.option.nsif_allow_nbts_filters.@Tooltip": "Requiert que les objets non regroupables soient filtrables",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_durability": "Durabilité ignorée ?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_durability.@Tooltip": "Requiert que les filtres par \"NBTs\" soient autorisés",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_enchantments": "Enchantements ignorés ?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_enchantments.@Tooltip": "Requiert que les filtres par \"NBTs\" soient autorisés",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_name": "Noms ignorés?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_name.@Tooltip": "Requiert que les filtres par \"NBTs\" soient autorisés",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_potions": "Effets de potion ignorés ?",
+  "text.autoconfig.sticky_hopper.option.nsif_ignore_potions.@Tooltip": "Requiert que les filtres par \"NBTs\" soient autorisés et éventuellement les noms non ignorés"
 }
