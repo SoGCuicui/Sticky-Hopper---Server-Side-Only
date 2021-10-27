@@ -24,52 +24,68 @@ But since Sticky Hoppers keep one item each, they do not actually transfer anyth
 ### Advanced
 
 **Since version 3.0**, for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!
-
-Though, a single Sticky Hopper will be able to sort only one non-stackable item type, and you'll need some extra ingredients to make kind of a "recipe" inside its inventory!  
-Moreover, this is a customizable option that is disabled by default!  
+  
+This is a customizable option that is disabled by default.  
 Indeed, the initial idea behind this Hopper is to have a vanilla-friendly behavior, and adding the ability of sorting non-stackable items is quite overkill!
-
-
-#### Customization
-
-To activate it, you have to edit the `config/sticky_hopper.toml` file.  
-On a single player session, you can also use [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) to change the firsts options in-game, on-the-fly.
-
-Here are the available options, with their default values:
-- `nsif_enabled = false` - Controls if the "Non-Stackable Items Filter" is disabled (default), or enabled (`true`),
-- `nsif_allow_nbts_filters = true` - By default, the NBTs (Named Binary Tags) of the incoming items are not strictly compared to those of the item in the Sticky Hopper allowing more precise filter control, turning this to `false` may have kind of side effects that you probably don't want (see **Notes** below for more details),
-- `nsif_ignore_durability = false` - Turn this to `true` with `nsif_allow_nbts_filters` to allow items with different durability to "match" and be filtered,
-- `nsif_ignore_enchantments = false` - Turn this to `true` with `nsif_allow_nbts_filters` to allow items with different enchantments (including no enchantments) to be considered as equals by the filter,
-- `nsif_ignore_name = false` - Turn this to `true` with `nsif_allow_nbts_filters` to sort items with different names together,
-- `nsif_ignore_potions = false` - Turn this to `true` with `nsif_allow_nbts_filters` (and `nsif_ignore_name`, see **Notes** below) to allow different Potions to be considered as equals,
-- `nsif_observed_slot = 2` - (Editable only in the config file) - Index, starting from 0, of the slot where the item to be filtered should be placed in the Sticky Hopper inventory,
-- `nsif_recipe_slots = ["minecraft:tripwire_hook", "minecraft:string", "minecraft:air", "minecraft:string", "minecraft:tripwire_hook"]` - (Editable only in the config file) - An array representing the list of ingredients in the recipe (the `nsif_observed_slot` index will be ignored, by default it is set to `minecraft:air`).
-
-**Notes:**  
-Imagine two swords strictly identical, but you used one and not the other.  
-You repaired the first one so they both have the same durability (in fact, "Damage", equals 0).  
-They actually will not have the same NBTs, because the "RepairCost" will be different!  
-So if Sticky Hoppers are not allowing NBTs filters, these swords will not be filtered!  
-But if NBTs filters are allowed, and durability not ignored, these two swords will match!  
-Same remarks with Enchantments, they also increase the repair cost, so two items remain identical unless you enchant them in different ways (by merging enchantments on one item and not the other for example).  
-There may be other cases — not identified here — involving the same kind of behavior, so it is certainly better to leave `nsif_allow_nbts_filters` to `true`.
-
-Another interesting thing to mention is that short or long Potions of the same type are named the same.  
-So, turning `nsif_ignore_potions` to `true` while keeping `nsif_ignore_name` to `false` will allow you to sort these Potions together.  
-Turning both to `false` will allow only the exact same type of Potions to match, and both to `true` to sort all Potions together.
 
 
 #### Usage
 
-You have to configure your Sticky Hoppers by placing the item you want to filter like so (adapt this to your `nsif_recipe_slots` array):  
-![](https://media.forgecdn.net/attachments/402/360/non-stackable_items_filter_recipe.png)  
-Use only one Tripwire Hook and one String on both sides of your item!  
-If you do so, the non-stackable item in the center will be transferred every time another identical item will take its place, at Hopper speed!
+This feature, when enabled, takes advantage of the fact that a Sticky Hopper keeps items in its inventory.  
+To filter out a non-stackable item, the inventory must be filled with a single copy of specific items (the "recipe").
+
+By default, this recipe uses a Book and Quill (or a Written Book) that can set filtering conditions, in addition to customizable global permissions.  
+![](https://media.forgecdn.net/attachments/403/978/nsif_recipe_with_book.png)    
+The recipe is also customizable, and the book can be ignored so only global permissions would be used.  
+For instance:  
+![](https://media.forgecdn.net/attachments/402/360/non-stackable_items_filter_recipe.png)
+
+To use the book, write keywords on its first page. They are case-sensitive, and of course, also customizable!  
+By default, write "Durability" to allow items with different durability to match and be sorted with each other,  
+"Enchantment" so items with different enchantments are grouped,  
+"Potion" to be able to group some potions together (see the 1st note below),  
+and finally write "Name" to join items with different names.  
+*(Other NBTs are not compared, regardless of the permissions and conditions given in the book.)*
 
 **Notes:**
+- Short and long potions of the same type are named the same.  
+  So grouping potions with the "Potion" condition but not with "Name" will allow you to only sort these short and long ones together.  
+  Use "Potion" and "Name" to group all Potions together, but also all Splash Potions in another group, and Lingering Potions in a 3rd one.
 - The Sticky Hopper **must** be able to insert the item into an inventory (another Hopper, a Chest, a Dropper...) to accept the transfer, a Hopper placed below will not be able to pick up anything unless the Sticky Hopper points toward it.
-- New incoming Tripwire Hooks and Strings will be ignored by this Hopper.
+- New incoming stackable items present in the recipe will be ignored by this Hopper.
 - Enchantments of the item to be filtered are ignored. (Its durability is not ignored by default, this is customizable.)
+
+
+#### Customization
+
+To activate this feature, you have to edit the `config/sticky_hopper.toml` file.  
+On a single player session, you can also use [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
+
+Here are all the available options, with their default values:
+```
+[general]
+nsif_enabled = false
+[recipe]
+nsif_slot1 = "item"
+nsif_slot2 = "minecraft:item_frame"
+nsif_slot3 = "minecraft:comparator"
+nsif_slot4 = "minecraft:lectern"
+nsif_slot5 = "book"
+[permissions]
+nsif_allows_diff_durability = true
+nsif_allows_diff_enchantment = true
+nsif_allows_diff_potion_effect = true
+nsif_allows_diff_name = true
+[book]
+nsif_durability_keyword = "Durability"
+nsif_enchantments_keyword = "Enchantment"
+nsif_potion_effect_keyword = "Potion"
+nsif_name_keyword = "Name"
+```
+
+The recipe needs one slot to be set to "item", "book" is optional. The other slots need valid items identifiers.  
+The permissions define either which keywords can be used in the book, or the conditions always enabled for all Sticky Hoppers.  
+The book keywords must contain at least one letter, otherwise the default ones would be used.
 
 
 ## Craft
@@ -117,10 +133,10 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 
 ### Known Incompatibilities
 
-- _Lithium (≥ 1.17 only)_:
+- _Lithium (≥ 1.17 only)_:  
   Hoppers optimisations added in Lithium make Sticky Hoppers act like normal Hoppers!  
-  I intend to work on this problem sooner or later. In the meantime, my mod the deactivation of these optimizations for Minecraft 1.17.1 (if you are using it for 1.17, just add `mixin.block.hopper=false` in "config/lithium.properties" yourself).
-- _Vanilla Tweaks - Resource Packs_:
+  I may work on this problem at some point... In the meantime, my mod the deactivation of these optimizations for Minecraft 1.17.1 (if you are using it for 1.17, just add `mixin.block.hopper=false` in "config/lithium.properties" yourself).
+- _Vanilla Tweaks - Resource Packs_:  
   I've found two [Vanilla Tweaks resource packs](https://vanillatweaks.net/picker/resource-packs/) that have small compatibility issues, due to the change in texture of the Sticky Hoppers.  
   => _Directional Hoppers_ normally displays an arrow inside the hopper if it is not pointing down. It does not appear in Sticky Hoppers because of the texture of the honey.  
   => _3D Items_, more annoying, changes the model used for items (in the hotbar, in the hand, and also for items dropped on the ground), and unfortunately the honey texture does not appear at all.  

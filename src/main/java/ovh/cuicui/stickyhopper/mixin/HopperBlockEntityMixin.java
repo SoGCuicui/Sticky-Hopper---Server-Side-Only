@@ -8,11 +8,15 @@ import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.WrittenBookItem;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,11 +40,11 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     private static ItemStack sh_insert_getStack(Inventory inventory, int slot) {
         ItemStack itemStack = inventory.getStack(slot);
         if (!(inventory instanceof StickyHopperBlockEntity)
-         || (((StickyHopperBlockEntity)inventory).needsNonStackableInsert && slot == Main.config.nsif_observed_slot)
+         || (((StickyHopperBlockEntity)inventory).needsNonStackableInsert && slot == ArrayUtils.indexOf(Main.config.getRecipe(), "item"))
          || itemStack.getCount() > 1) {
-            return (itemStack);
+            return (itemStack); // Inserts this item
         }
-        return (ItemStack.EMPTY);
+        return (ItemStack.EMPTY); // Ignores it
     }
 
     // A Hopper (Sticky or not) can extract an item from a slot of Sticky Hopper above only if there is more than one item
@@ -57,38 +61,71 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     private static void sh_transfer_head(@Nullable Inventory from, Inventory to, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<ItemStack> info) {
         // This "recipe" requires only one item on each slot, so we can use the overridden to.isEmpty() method in this test
         // Also, the sticky hopper must not to be blocked, otherwise it would normally accept an inserted item (from another hopper) and so we would be forced to accept the transfer
-        if (to instanceof StickyHopperBlockEntity && Main.config.nsif_enabled && to.isEmpty() && ((StickyHopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED)) {
-            int filterSlot = Main.config.nsif_observed_slot;
-            for (int index = 0; index < to.size(); ++index) {
-                ItemStack itemStack = to.getStack(index);
-                if ((index != filterSlot && !itemStack.isOf(Registry.ITEM.get(new Identifier(Main.config.nsif_recipe_slots[index]))))
-                 || (index == filterSlot && itemStack.getMaxCount() > 1)) {
-                    return; // Wrong recipe, continue normal execution
+        if (to instanceof StickyHopperBlockEntity && Main.config.general.nsif_enabled && to.isEmpty() && ((StickyHopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED)) {
+            String[] recipe = Main.config.getRecipe();
+            int filteredSlot = ArrayUtils.indexOf(recipe, "item");
+            int bookSlot = ArrayUtils.indexOf(recipe, "book");
+
+            for (int index = 0; index < 5; ++index) {
+                ItemStack invStack = to.getStack(index);
+                if (index == filteredSlot) {
+                    if (invStack.getMaxCount() > 1) {
+                        return; // Wrong recipe, continue normal execution
+                    }
+                } else if (index == bookSlot) {
+                    if (!invStack.isOf(Items.WRITABLE_BOOK) && !invStack.isOf(Items.WRITTEN_BOOK)) {
+                        return; // Wrong recipe, continue normal execution
+                    }
+                } else {
+                    try {
+                        if (!invStack.isOf(Registry.ITEM.get(new Identifier(recipe[index])))) {
+                            return; // Wrong recipe, continue normal execution
+                        }
+                    } catch (InvalidIdentifierException exception) {
+                        return; // Wrong config, continue normal execution
+                    }
                 }
             }
 
-            ItemStack itemStack = to.getStack(filterSlot);
-
-            if (stack.getMaxCount() > 1 || !stack.isOf(itemStack.getItem())
-             || (!Main.config.nsif_allow_nbts_filters && !ItemStack.areNbtEqual(stack, itemStack))
-             || (!Main.config.nsif_ignore_durability && stack.getDamage() != itemStack.getDamage())
-             || (!Main.config.nsif_ignore_enchantments && !stack.getEnchantments().equals(itemStack.getEnchantments()))
-             || (!Main.config.nsif_ignore_name && !stack.getName().equals(itemStack.getName()))
-             || (!Main.config.nsif_ignore_potions && !stack.getNbt().getString("Potion").equals(itemStack.getNbt().getString("Potion")))) {
-                info.setReturnValue(stack); // Incoming item rejected, transfer canceled
+            if (stack.getMaxCount() > 1 || !stack.isOf(to.getStack(filteredSlot).getItem())) {
+                info.setReturnValue(stack); // Incoming item rejected, transfer cancelled
                 return;
             }
 
-            ((StickyHopperBlockEntity)to).needsNonStackableInsert = true;
+            boolean durability = Main.config.permissions.nsif_allows_diff_durability;
+            boolean enchantments = Main.config.permissions.nsif_allows_diff_enchantment;
+            boolean potionEffect = Main.config.permissions.nsif_allows_diff_potion_effect;
+            boolean name = Main.config.permissions.nsif_allows_diff_name;
+            if (bookSlot >= 0) {
+                ItemStack book = to.getStack(bookSlot);
+                if (WrittenBookItem.getPageCount(book) > 0) { // We check only the first page
+                    String text = book.getNbt().getList("pages", 8).getString(0);
+                    durability = durability && text.contains(Main.config.book.nsif_durability_keyword.length() > 0 ? Main.config.book.nsif_durability_keyword : "Durability");
+                    enchantments = enchantments && text.contains(Main.config.book.nsif_enchantment_keyword.length() > 0 ? Main.config.book.nsif_enchantment_keyword : "Enchantment");
+                    potionEffect = potionEffect && text.contains(Main.config.book.nsif_potion_effect_keyword.length() > 0 ? Main.config.book.nsif_potion_effect_keyword : "Potion");
+                    name = name && text.contains(Main.config.book.nsif_name_keyword.length() > 0 ? Main.config.book.nsif_name_keyword : "Name");
+                }
+            }
+
+            ItemStack filteredStack = to.getStack(filteredSlot);
+            if ((!durability && stack.getDamage() != filteredStack.getDamage())
+             || (!enchantments && !stack.getEnchantments().equals(filteredStack.getEnchantments()))
+             || (!potionEffect && !stack.getNbt().getString("Potion").equals(filteredStack.getNbt().getString("Potion")))
+             || (!name && !stack.getName().equals(filteredStack.getName()))) {
+                info.setReturnValue(stack); // Incoming item rejected, transfer cancelled
+                return;
+            }
+
+            ((StickyHopperBlockEntity) to).needsNonStackableInsert = true;
             boolean nonStackableInserted = insert(((StickyHopperBlockEntity) to).getWorld(), ((StickyHopperBlockEntity) to).getPos(), ((StickyHopperBlockEntity) to).getCachedState(), to);
-            ((StickyHopperBlockEntity)to).needsNonStackableInsert = false;
+            ((StickyHopperBlockEntity) to).needsNonStackableInsert = false;
 
             // Last but not least, if the non-stackable item can't be inserted to another inventory we cancel the transfer, otherwise the item would get lost
             if (!nonStackableInserted) {
-                info.setReturnValue(stack); // Transfer canceled
+                info.setReturnValue(stack); // Transfer cancelled
                 return;
             }
-            to.setStack(filterSlot, stack);
+            to.setStack(filteredSlot, stack);
             info.setReturnValue(ItemStack.EMPTY); // Incoming item accepted, transfer done
         }
     }
