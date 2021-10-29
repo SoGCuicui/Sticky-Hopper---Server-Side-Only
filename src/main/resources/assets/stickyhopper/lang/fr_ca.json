@@ -1,4 +1,32 @@
 {
   "block.stickyhopper.sticky_hopper": "Entonnoir collant",
-  "container.sticky_hopper": "Entonnoir collant"
+  "container.sticky_hopper": "Entonnoir collant",
+
+  "text.autoconfig.sticky_hopper.title": "Configuration des Entonnoirs Collants",
+
+  "text.autoconfig.sticky_hopper.category.general": "Général",
+  "text.autoconfig.sticky_hopper.option.general.nsif_enabled.@PrefixText": "Les Entonnoirs Collants peuvent utiliser une \"Recette\" pour filtrer les objets non regroupables!\nCelle-ci utilise un Livre afin de définir les critères de trie,\nautrement les Permissions sont les mêmes pour tous les Entonnoirs Collants.\n\nConsultez la page \"Sticky Hopper\" sur CurseForge pour plus de détails!",
+  "text.autoconfig.sticky_hopper.option.general.nsif_enabled": "Objets non regroupables filtrables?",
+
+  "text.autoconfig.sticky_hopper.category.recipe": "Recette",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_recipe1.@PrefixText": "Définissez ici la recette,\nc'est à dire les objets à placer dans l'inventaire d'un Entonnoir Collant\npour qu'il puisse trier un objet non regroupables.\nÉcrivez \"item\" pour définir l'emplacement de l'objet a trier,\n\"book\" pour l'emplacement du Livre de critères, si désiré,\net le nom complet des autres objets composant la Recette\n(par exemple: \"minecraft:comparator\").",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot1": "1er emplacement:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot2": "2ème emplacement:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot3": "3ème emplacement:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot4": "4ème emplacement:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot5": "5ème emplacement:",
+
+  "text.autoconfig.sticky_hopper.category.permissions": "Permissions",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_durability.@PrefixText": "Permissions permettant de filtrer selon certain critères.\nSi le Livre n'est pas utilisé (non défini dans la Recette),\nces Permissions sont globales à tous les Entonnoirs Collants.\n\nPermettre de trier indépendamment..",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_durability": "..de la durabilité?",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_enchantment": "..des enchantements?",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_potion_effect": "..des effets de potion?",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_name": "..du nom?",
+
+  "text.autoconfig.sticky_hopper.category.book": "Livre",
+  "text.autoconfig.sticky_hopper.option.book.nsif_durability_keyword.@PrefixText": "Le Livre peut être un Livre Vierge ou un Livre Édité.\nSi vous l'utilisez, vous pouvez définir ici les mots-clés\nà inscrire dans sa 1ère page pour que les critères de trie soient effectifs\n(à condition qu'ils soient aussi validés par les Permissions).\n\nMot-clé pour ignorer..",
+  "text.autoconfig.sticky_hopper.option.book.nsif_durability_keyword": "..la durabilité:",
+  "text.autoconfig.sticky_hopper.option.book.nsif_enchantments_keyword": "..les enchantements:",
+  "text.autoconfig.sticky_hopper.option.book.nsif_potion_effect_keyword": "..les effets de potion:",
+  "text.autoconfig.sticky_hopper.option.book.nsif_name_keyword": "..le nom:"
 }
