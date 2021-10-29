@@ -26,7 +26,7 @@ But since Sticky Hoppers keep one item each, they do not actually transfer anyth
 **Since version 3.0**, for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!
   
 This is a customizable option that is disabled by default.  
-Indeed, the initial idea behind this Hopper is to have a vanilla-friendly behavior, and adding the ability of sorting non-stackable items is quite overkill!
+Indeed, the initial idea behind this Hopper is to have a vanilla-friendly behavior, and, I think you'll agree, adding the ability of sorting non-stackable items is quite overkill!
 
 
 #### Usage
@@ -37,7 +37,7 @@ To filter out a non-stackable item, the inventory must be filled with a single c
 By default, this recipe uses a Book and Quill (or a Written Book) that can set filtering conditions, in addition to customizable global permissions.  
 ![](https://media.forgecdn.net/attachments/403/978/nsif_recipe_with_book.png)    
 The recipe is also customizable, and the book can be ignored so only global permissions would be used.  
-For instance:  
+For instance, you can configure this recipe:  
 ![](https://media.forgecdn.net/attachments/402/360/non-stackable_items_filter_recipe.png)
 
 To use the book, write keywords on its first page. They are case-sensitive, and of course, also customizable!  
@@ -53,7 +53,6 @@ and finally write "Name" to join items with different names.
   Use "Potion" and "Name" to group all Potions together, but also all Splash Potions in another group, and Lingering Potions in a 3rd one.
 - The Sticky Hopper **must** be able to insert the item into an inventory (another Hopper, a Chest, a Dropper...) to accept the transfer, a Hopper placed below will not be able to pick up anything unless the Sticky Hopper points toward it.
 - New incoming stackable items present in the recipe will be ignored by this Hopper.
-- Enchantments of the item to be filtered are ignored. (Its durability is not ignored by default, this is customizable.)
 
 
 #### Customization
@@ -83,7 +82,7 @@ nsif_potion_effect_keyword = "Potion"
 nsif_name_keyword = "Name"
 ```
 
-The recipe needs one slot to be set to "item", "book" is optional. The other slots need valid items identifiers.  
+The recipe needs one slot to be set to "item", whereas "book" is optional. The other slots need valid items identifiers.  
 The permissions define either which keywords can be used in the book, or the conditions always enabled for all Sticky Hoppers.  
 The book keywords must contain at least one letter, otherwise the default ones would be used.
 
@@ -110,7 +109,7 @@ All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), th
 
 ## Miscellaneous
 
-This mod is translated in English and French.  
+This mod is translated in English and French, including the customization menu.  
 You are free to use this mod in any modpacks you'd make.
 
 This mod works without conflict with my other mod "[Speedy Hopper](https://www.curseforge.com/minecraft/mc-mods/speedy-hopper)", but of course you won't be able to craft a "Fast Sticky Hopper", so you'll have to make choices and design your contraptions accordingly!
@@ -135,7 +134,7 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 
 - _Lithium (≥ 1.17 only)_:  
   Hoppers optimisations added in Lithium make Sticky Hoppers act like normal Hoppers!  
-  I may work on this problem at some point... In the meantime, my mod the deactivation of these optimizations for Minecraft 1.17.1 (if you are using it for 1.17, just add `mixin.block.hopper=false` in "config/lithium.properties" yourself).
+  I may work on this problem at some point... In the meantime, my mod disables these optimizations for Minecraft 1.17.1 (if you are using it for 1.17, just add `mixin.block.hopper=false` in "config/lithium.properties" yourself).
 - _Vanilla Tweaks - Resource Packs_:  
   I've found two [Vanilla Tweaks resource packs](https://vanillatweaks.net/picker/resource-packs/) that have small compatibility issues, due to the change in texture of the Sticky Hoppers.  
   => _Directional Hoppers_ normally displays an arrow inside the hopper if it is not pointing down. It does not appear in Sticky Hoppers because of the texture of the honey.  
