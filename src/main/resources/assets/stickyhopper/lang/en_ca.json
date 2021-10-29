@@ -1,4 +1,32 @@
 {
   "block.stickyhopper.sticky_hopper": "Sticky Hopper",
-  "container.sticky_hopper": "Sticky Hopper"
+  "container.sticky_hopper": "Sticky Hopper",
+
+  "text.autoconfig.sticky_hopper.title": "Sticky Hoppers Configuration",
+
+  "text.autoconfig.sticky_hopper.category.general": "General",
+  "text.autoconfig.sticky_hopper.option.general.nsif_enabled.@PrefixText": "Sticky Hoppers can use a \"Recipe\" to filter out non-stackable items!\nThe Recipe use a Book to define the sorting conditions,\notherwise the Permissions are the same for all Sticky Hoppers.\n\nSee the \"Sticky Hopper\" page on CurseForge for more details!",
+  "text.autoconfig.sticky_hopper.option.general.nsif_enabled": "Non-Stackable Items Filter Enabled?",
+
+  "text.autoconfig.sticky_hopper.category.recipe": "Recipe",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_recipe1.@PrefixText": "Define the recipe here,\ni.e. the objects to be placed in the inventory of a Sticky Hopper\nso that it can sort a non-stackable item.\nWrite \"item\" to define the location of the item to sort,\n\"book\" for the location of the Book, if desired,\nand the full name of other items in the Recipe\n(for example: \"minecraft:comparator\").",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot1": "1st Slot:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot2": "2nd Slot:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot3": "3rd Slot:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot4": "4th Slot:",
+  "text.autoconfig.sticky_hopper.option.recipe.nsif_slot5": "5th Slot:",
+
+  "text.autoconfig.sticky_hopper.category.permissions": "Permissions",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_durability.@PrefixText": "Permissions to filter according to certain conditions.\nIf the Book is not used (not defined in the Recipe),\nthese Permissions are global to all Sticky Hoppers.\n\nAllow to sort independently..",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_durability": "..of Durability?",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_enchantment": "..of Enchantments?",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_potion_effect": "..of Potion Effects ?",
+  "text.autoconfig.sticky_hopper.option.permissions.nsif_allows_diff_name": "..of the Name?",
+
+  "text.autoconfig.sticky_hopper.category.book": "Book",
+  "text.autoconfig.sticky_hopper.option.book.nsif_durability_keyword.@PrefixText": "The Book can be a Book And Quill or a Written Book.\nIf you use it, you can define here the keywords to be written\nin its first page so that the sorting conditions are effective\n(provided that it is also validated by the Permissions).\n\nKeyword to ignore..",
+  "text.autoconfig.sticky_hopper.option.book.nsif_durability_keyword": "..Durability:",
+  "text.autoconfig.sticky_hopper.option.book.nsif_enchantments_keyword": "..Enchantments:",
+  "text.autoconfig.sticky_hopper.option.book.nsif_potion_effect_keyword": "..Potion Effects:",
+  "text.autoconfig.sticky_hopper.option.book.nsif_name_keyword": "..the Name:"
 }
