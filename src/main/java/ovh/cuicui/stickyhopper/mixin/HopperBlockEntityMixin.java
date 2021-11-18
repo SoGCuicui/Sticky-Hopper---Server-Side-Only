@@ -104,6 +104,8 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
                     enchantments = enchantments && text.contains(Main.config.book.nsif_enchantment_keyword.length() > 0 ? Main.config.book.nsif_enchantment_keyword : "Enchantment");
                     potionEffect = potionEffect && text.contains(Main.config.book.nsif_potion_effect_keyword.length() > 0 ? Main.config.book.nsif_potion_effect_keyword : "Potion");
                     name = name && text.contains(Main.config.book.nsif_name_keyword.length() > 0 ? Main.config.book.nsif_name_keyword : "Name");
+                } else {
+                    durability = enchantments = potionEffect = name = false;
                 }
             }
 
