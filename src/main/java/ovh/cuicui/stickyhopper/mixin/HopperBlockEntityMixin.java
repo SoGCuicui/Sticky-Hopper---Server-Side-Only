@@ -38,10 +38,12 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     public boolean isSticky;
     private boolean needsNonStackableInsert = false;
 
+    // For Comparators
     public boolean isSticky() {
         return this.isSticky;
     }
 
+    // A Hopper is "Sticky" if there is a Honey Block in front of its output, or on top of it, even if there are others Hoppers in between
     @Inject(method = "insertAndExtract", at = @At("HEAD"), cancellable = true)
     private static void insertAndExtract(World world, BlockPos pos, BlockState state, HopperBlockEntity blockEntity, BooleanSupplier booleanSupplier, CallbackInfoReturnable<Boolean> info) {
         if (world.isClient) {
