@@ -5,9 +5,9 @@
 *Based on an original idea by [Aurelien_Sama (FR)](https://www.youtube.com/watch?v=3dE8PJsWcLo&ab_channel=Aurelien_SamaAurelien_Sama), and its prototype coded by ShoukaSeikyo.*
 
 
-## Features
+# Features
 
-### Basic
+## Basic
 
 **Sticky Hopper** — which is obviously a new block added by this mod — simply never empties completely, but retains a single item in each of its inventory slots instead.  
 It has been designed to be used as a filter. Simple, small, sliceable, redstone-less filter!
@@ -21,7 +21,7 @@ Please note that the time to transfer a stack of items through a line of Sticky 
 But since Sticky Hoppers keep one item each, they do not actually transfer anything until the second (same) item, so they may seem slower at first.
 
 
-### Advanced
+## Advanced
 
 **Since version 3.0**, for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!
   
@@ -29,7 +29,7 @@ This is a customizable option that is disabled by default.
 Indeed, the initial idea behind this Hopper is to have a vanilla-friendly behavior, and, I think you'll agree, adding the ability of sorting non-stackable items is quite overkill!
 
 
-#### Usage
+### Usage
 
 This feature, when enabled, takes advantage of the fact that a Sticky Hopper keeps items in its inventory.  
 To filter out a non-stackable item, the inventory must be filled with a single copy of specific items (the "recipe").
@@ -44,7 +44,8 @@ To use the book, write keywords on its first page. They are case-sensitive, and 
 By default, write "Durability" to allow items with different durability to match and be sorted with each other,  
 "Enchantment" so items with different enchantments are grouped,  
 "Potion" to be able to group some potions together (see the 1st note below),  
-and finally write "Name" to join items with different names.  
+and finally write "Name" to group items with different names.  
+If the book is empty, none of those differences will be grouped.  
 *(Other NBTs are not compared, regardless of the permissions and conditions given in the book.)*
 
 **Notes:**
@@ -55,7 +56,7 @@ and finally write "Name" to join items with different names.
 - New incoming stackable items present in the recipe will be ignored by this Hopper.
 
 
-#### Customization
+### Customization
 
 To activate this feature, you have to edit the `config/sticky_hopper.toml` file.  
 On a single player session, you can also use [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu).
@@ -87,7 +88,7 @@ The permissions define either which keywords can be used in the book, or the con
 The book keywords must contain at least one letter, otherwise the default ones would be used.
 
 
-## Craft
+# Craft
 
 A Honey Bottle on top of a normal Hopper. That's it! ¯\\\_(ツ)\_/¯  
 ![](https://media.forgecdn.net/attachments/373/562/sticky_hopper_craft.png)  
@@ -98,7 +99,22 @@ It is also possible to clean up a Sticky Hopper, just place a Snowball on top of
 *Didn't you know that snow cleans honey much better than a water bucket? The legend says that it is because the latter is not stackable!*
 
 
-## Installation
+# Server-Side Only
+
+**Since version 3.0a**, for Minecraft ≥ 1.17.1, this mod exists in a server-side only version!
+
+It basically works the same way as the default client/server version, except that it does not add a new block with its texture and title, but use default Hoppers instead.  
+To be able to act as "Sticky Hoppers", they must be directed into a Honey Block, or to have a Honey Block on top of (a column of) them.
+
+Here are screenshots showing some basic examples with one or more server-side only Sticky Hoppers:  
+![](https://media.forgecdn.net/attachments/408/708/server-side_only_simple_sample.png)
+![](https://media.forgecdn.net/attachments/408/709/server-side_only_ice_sample.png)
+![](https://media.forgecdn.net/attachments/408/710/server-side_only_advanced_sample.png)
+
+You cannot use Mod Menu to edit the configuration of this version of the mod, so if you are interested in filtering non-stackable items I recommend you setting it up using the default client/server version of the mod, then bringing its configuration file to your server!
+
+
+# Installation
 
 This mod is for both clients and servers!  
 As it adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the Sticky Hopper.
@@ -107,7 +123,7 @@ All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), th
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
 
 
-## Miscellaneous
+# Miscellaneous
 
 This mod is translated in English and French, including the customization menu.  
 You are free to use this mod in any modpacks you'd make.
@@ -120,8 +136,9 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 *Hope you'll find this mod usefull! ♥ Also, feel free to take a look at [my other mods](https://www.curseforge.com/members/cuicui_off/projects)!*
 
 
-### Versions
+## Versions
 
+3.0a - (≥ 1.17.1) Improves the functionality of the sorting book - This is also the first release of the server-side only version!  
 3.0 - (≥ 1.17.1) Adding the ability to filter non-stackable items  
 2.3 - (≥ 1.17) Bugfix: Pickaxe tag added, so it's possible to mine Sticky Hoppers  
 2.2 - Cleaning craft simplified  
@@ -130,7 +147,7 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 1.0 - Initial project with operational Sticky Hoppers
 
 
-### Known Incompatibilities
+## Known Incompatibilities
 
 - _Lithium (≥ 1.17 only)_:  
   Hoppers optimisations added in Lithium make Sticky Hoppers act like normal Hoppers!  

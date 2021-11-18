@@ -31,6 +31,8 @@ public class Configuration implements ConfigData {
     }
 
     public static class GeneralCategory implements Cloneable {
+        @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
+
         @ConfigEntry.Gui.PrefixText()
         public boolean nsif_enabled = false;
     }

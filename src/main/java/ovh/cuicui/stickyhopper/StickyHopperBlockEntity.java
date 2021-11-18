@@ -1,6 +1,6 @@
 package ovh.cuicui.stickyhopper;
 
-import net.minecraft.block.BlockState;
+/*import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.text.Text;
@@ -29,4 +29,4 @@ public class StickyHopperBlockEntity extends HopperBlockEntity {
         }
         return (true);
     }
-}
+}*/
