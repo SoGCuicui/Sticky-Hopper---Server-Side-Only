@@ -24,7 +24,7 @@ But since Sticky Hoppers keep one item each, they do not actually transfer anyth
 ## Advanced
 
 **Since version 3.0**, for Minecraft ≥ 1.17.1, it is possible to filter non-stackable items!
-
+  
 This is a customizable option that is disabled by default.  
 Indeed, the initial idea behind this Hopper is to have a vanilla-friendly behavior, and, I think you'll agree, adding the ability of sorting non-stackable items is quite overkill!
 
@@ -111,15 +111,16 @@ Here are screenshots showing some basic examples with one or more server-side on
 ![](https://media.forgecdn.net/attachments/408/709/server-side_only_ice_sample.png)
 ![](https://media.forgecdn.net/attachments/408/710/server-side_only_advanced_sample.png)
 
-You cannot use Mod Menu to edit the configuration of this version of the mod, so if you are interested in filtering non-stackable items I recommend you setting it up using the default client/server version of the mod, then bringing its configuration file to your server!
+You cannot use Mod Menu to edit the configuration of this version of the mod, so if you are interested in filtering non-stackable items I recommend you setting it up using the default client/server version of the mod, then bringing its configuration file to your server!  
+However, you'll still need Cloth Config (see below) for the server to start!
 
 
 # Installation
 
-This mod is for both clients and servers!  
-As it adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the Sticky Hopper.
+As the default client/server version adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the Sticky Hopper.  
+Otherwise you can use the server-side only version.
 
-All you need is, of course, the [Fabric launcher](https://fabricmc.net/use/), the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
+The minimum requirements are, of course, the [Fabric launcher](https://fabricmc.net/use/) and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and also the [Cloth Config](https://www.curseforge.com/minecraft/mc-mods/cloth-config) mod, and to copy the ".jar" file into your mods folder.  
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
 
 
