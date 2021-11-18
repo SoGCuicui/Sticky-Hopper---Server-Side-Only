@@ -2,13 +2,13 @@ package ovh.cuicui.stickyhopper;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
-import net.fabricmc.api.ModInitializer;
+import net.fabricmc.api.DedicatedServerModInitializer;
 
-public class Main implements ModInitializer {
+public class Main implements DedicatedServerModInitializer {
 	public static Configuration config;
 
 	@Override
-	public void onInitialize() {
+	public void onInitializeServer() {
 		AutoConfig.register(Configuration.class, Toml4jConfigSerializer::new);
 		config = AutoConfig.getConfigHolder(Configuration.class).getConfig();
 

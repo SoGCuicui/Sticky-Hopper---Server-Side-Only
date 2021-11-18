@@ -111,7 +111,8 @@ Here are screenshots showing some basic examples with one or more server-side on
 ![](https://media.forgecdn.net/attachments/408/709/server-side_only_ice_sample.png)
 ![](https://media.forgecdn.net/attachments/408/710/server-side_only_advanced_sample.png)
 
-You cannot use Mod Menu to edit the configuration of this version of the mod, so if you are interested in filtering non-stackable items I recommend you setting it up using the default client/server version of the mod, then bringing its configuration file to your server!
+You cannot use Mod Menu to edit the configuration of this version of the mod, so if you are interested in filtering non-stackable items I recommend you setting it up using the default client/server version of the mod, then bringing its configuration file to your server!  
+However, you'll need [Cloth Config](https://www.curseforge.com/minecraft/mc-mods/cloth-config) for the server to start!
 
 
 # Installation
