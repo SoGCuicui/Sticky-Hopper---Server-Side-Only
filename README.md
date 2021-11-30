@@ -139,6 +139,7 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 
 ## Versions
 
+3.0b - Corrections of texts for Mod Menu (Client/Server version)
 3.0a - (≥ 1.17.1) Improves the functionality of the sorting book - This is also the first release of the server-side only version!  
 3.0 - (≥ 1.17.1) Adding the ability to filter non-stackable items  
 2.3 - (≥ 1.17) Bugfix: Pickaxe tag added, so it's possible to mine Sticky Hoppers  
