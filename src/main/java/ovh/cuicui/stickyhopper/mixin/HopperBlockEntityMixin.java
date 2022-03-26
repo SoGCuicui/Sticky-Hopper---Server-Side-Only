@@ -61,7 +61,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     private static void sh_transfer_head(@Nullable Inventory from, Inventory to, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<ItemStack> info) {
         // This "recipe" requires only one item on each slot, so we can use the overridden to.isEmpty() method in this test
         // Also, the sticky hopper must not to be blocked, otherwise it would normally accept an inserted item (from another hopper) and so we would be forced to accept the transfer
-        if (to instanceof StickyHopperBlockEntity && Main.config.general.nsif_enabled && to.isEmpty() && ((StickyHopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED)) {
+        if (to instanceof StickyHopperBlockEntity && Main.config.general.nsif_enabled && to.isEmpty() && ((StickyHopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED) && stack.getMaxCount() == 1) {
             String[] recipe = Main.config.getRecipe();
             int filteredSlot = ArrayUtils.indexOf(recipe, "item");
             int bookSlot = ArrayUtils.indexOf(recipe, "book");
@@ -87,7 +87,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
                 }
             }
 
-            if (stack.getMaxCount() > 1 || !stack.isOf(to.getStack(filteredSlot).getItem())) {
+            if (!stack.isOf(to.getStack(filteredSlot).getItem())) {
                 info.setReturnValue(stack); // Incoming item rejected, transfer cancelled
                 return;
             }
