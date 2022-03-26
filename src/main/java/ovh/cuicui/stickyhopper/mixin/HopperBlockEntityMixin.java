@@ -1,17 +1,19 @@
 package ovh.cuicui.stickyhopper.mixin;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.Hopper;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.WrittenBookItem;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;
@@ -25,48 +27,21 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ovh.cuicui.stickyhopper.HopperBlockEntityMixinAccessor;
 import ovh.cuicui.stickyhopper.Main;
-
-import java.util.function.BooleanSupplier;
 
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntity implements HopperBlockEntityMixinAccessor {
     public HopperBlockEntityMixin(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) { super(blockEntityType, blockPos, blockState); }
 
-    public boolean isSticky;
+    private boolean isSticky;
     private boolean needsNonStackableInsert = false;
 
-    // For Comparators
+    // For Comparators and Items
     public boolean isSticky() {
         return this.isSticky;
-    }
-
-    // A Hopper is "Sticky" if there is a Honey Block in front of its output, or on top of it, even if there are others Hoppers in between
-    @Inject(method = "insertAndExtract", at = @At("HEAD"), cancellable = true)
-    private static void insertAndExtract(World world, BlockPos pos, BlockState state, HopperBlockEntity blockEntity, BooleanSupplier booleanSupplier, CallbackInfoReturnable<Boolean> info) {
-        if (world.isClient) {
-            info.setReturnValue(false);
-        } else {
-            HopperBlockEntityMixin hopper = (HopperBlockEntityMixin)(Inventory) blockEntity;
-            if (world.getBlockState(pos.offset(state.get(HopperBlock.FACING))).getBlock() == Blocks.HONEY_BLOCK) {
-                hopper.isSticky = true;
-            } else {
-                Block inputBlock;
-                do {
-                    pos = pos.offset(Direction.UP);
-                    BlockState inputState = world.getBlockState(pos);
-                    inputBlock = inputState.getBlock();
-                } while (inputBlock == Blocks.HOPPER);
-
-                if (inputBlock == Blocks.HONEY_BLOCK) {
-                    hopper.isSticky = true;
-                } else {
-                    hopper.isSticky = false;
-                }
-            }
-        }
     }
 
     // A Sticky Hopper is considered empty even if there is still one item in each slot
@@ -84,8 +59,25 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
         return (super.isEmpty());
     }
 
+    @Override
+    public Text getContainerName() { return this.isSticky ? Text.of("Sticky Hopper") : new TranslatableText("container.hopper"); }
+
     @Shadow
     private static native boolean insert(World world, BlockPos pos, BlockState state, Inventory inventory);
+
+    // If the NBT does not exist, it will be set to false by default
+    @Inject(method = "readNbt", at = @At("TAIL"))
+    public void sh_readNbt_tail(NbtCompound nbt, CallbackInfo info) {
+        this.isSticky = nbt.getBoolean("IsSticky");
+    }
+
+    // If the Hopper is not sticky, we don't write the NBT, so it is like any new, "virgin" Hoppers
+    @Inject(method = "writeNbt", at = @At("TAIL"))
+    protected void sh_writeNbt_tail(NbtCompound nbt, CallbackInfo info) {
+        if (this.isSticky) {
+            nbt.putBoolean("IsSticky", true);
+        }
+    }
 
     // A Sticky Hopper can insert an item to the next inventory only if there is more than one item in a slot
     // ≥ v3.0: We allow to insert a non-stackable item from the slot defined by Main.config.nsif_observed_slot if needed (this method is then called a second time from sh_transfer_head below)
@@ -109,12 +101,32 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
         }
     }
 
+    // We can change a Hopper by dropping a single Honey Bottle or a single Snow Ball
+    @Inject(method = "extract(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/entity/ItemEntity;)Z", at = @At("HEAD"), cancellable = true)
+    private static void sh_extract_head(Inventory inventory, ItemEntity itemEntity, CallbackInfoReturnable<Boolean> info) {
+        if (itemEntity.getStack().getCount() == 1) {
+            if (((HopperBlockEntityMixin) inventory).isSticky) {
+                if (itemEntity.getStack().isOf(Items.SNOWBALL)) {
+                    ((HopperBlockEntityMixin) inventory).isSticky = false;
+                    itemEntity.discard();
+                    info.setReturnValue(true);
+                }
+            } else {
+                if (itemEntity.getStack().isOf(Items.HONEY_BOTTLE)) {
+                    ((HopperBlockEntityMixin) inventory).isSticky = true;
+                    itemEntity.setStack(new ItemStack(Items.GLASS_BOTTLE));
+                    info.setReturnValue(true);
+                }
+            }
+        }
+    }
+
     // ≥ v3.0: If the "recipe" is set, we try to transfer filtered non-stackable item
     @Inject(method = "transfer(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/inventory/Inventory;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/math/Direction;)Lnet/minecraft/item/ItemStack;", at = @At("HEAD"), cancellable = true)
     private static void sh_transfer_head(@Nullable Inventory from, Inventory to, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<ItemStack> info) {
         // This "recipe" requires only one item on each slot, so we can use the overridden to.isEmpty() method in this test
         // Also, the sticky hopper must not to be blocked, otherwise it would normally accept an inserted item (from another hopper) and so we would be forced to accept the transfer
-        if (to instanceof HopperBlockEntity && ((HopperBlockEntityMixin) to).isSticky
+        if (stack.getMaxCount() > 1 || to instanceof HopperBlockEntity && ((HopperBlockEntityMixin) to).isSticky
          && Main.config.general.nsif_enabled && to.isEmpty() && ((HopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED)) {
             String[] recipe = Main.config.getRecipe();
             int filteredSlot = ArrayUtils.indexOf(recipe, "item");
@@ -141,7 +153,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
                 }
             }
 
-            if (stack.getMaxCount() > 1 || !stack.isOf(to.getStack(filteredSlot).getItem())) {
+            if (!stack.isOf(to.getStack(filteredSlot).getItem())) {
                 info.setReturnValue(stack); // Incoming item rejected, transfer cancelled
                 return;
             }

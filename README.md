@@ -53,7 +53,6 @@ If the book is empty, none of those differences will be grouped.
   So grouping potions with the "Potion" condition but not with "Name" will allow you to only sort these short and long ones together.  
   Use "Potion" and "Name" to group all Potions together, but also all Splash Potions in another group, and Lingering Potions in a 3rd one.
 - The Sticky Hopper **must** be able to insert the item into an inventory (another Hopper, a Chest, a Dropper...) to accept the transfer, a Hopper placed below will not be able to pick up anything unless the Sticky Hopper points toward it.
-- New incoming stackable items present in the recipe will be ignored by this Hopper.
 
 
 ### Customization
@@ -101,15 +100,15 @@ It is also possible to clean up a Sticky Hopper, just place a Snowball on top of
 
 # Server-Side Only
 
-**Since version 3.0a**, for Minecraft ≥ 1.17.1, this mod exists in a server-side only version!
+**Since version 3.0a**, for Minecraft ≥ 1.17.1, this mod exists in a server-side only version!  
+It basically works the same way as the default client/server version, except that it does not add a new block with its own texture and stuff, but use default Hoppers instead.
 
-It basically works the same way as the default client/server version, except that it does not add a new block with its texture and title, but use default Hoppers instead.  
-To be able to act as "Sticky Hoppers", they must be directed into a Honey Block, or to have a Honey Block on top of (a column of) them.
+To craft a Sticky Hopper, you have to drop Honey Bottle in a placed Hopper. Yes, your honey farms will be full of these, sorry! ¯\\\_(ツ)\_/¯  
+Like in the normal craft described above, the honey is consumed and the bottle may be absorbed by the Hopper 8 ticks later!  
+It will change its NBTs so the game can differentiate it from normal Hoppers. This NBTs is kept by the item if you break the Hopper, that means it won't stack with normal Hoppers, and more importantly it won't lose its Sticky power.  
+Unless you give it a custom name, the Hopper would appear as "Sticky Hopper" when opening its inventory, but sadly the item can't be renamed. It's also not possible to give it a different texture with a texture pack.
 
-Here are screenshots showing some basic examples with one or more server-side only Sticky Hoppers:  
-![](https://media.forgecdn.net/attachments/408/708/server-side_only_simple_sample.png)
-![](https://media.forgecdn.net/attachments/408/709/server-side_only_ice_sample.png)
-![](https://media.forgecdn.net/attachments/408/710/server-side_only_advanced_sample.png)
+To uncraft a Sticky Hopper, drop a Snowball on it. Do not try to throw it, or you may just open the Hopper inventory! ;)
 
 You cannot use Mod Menu to edit the configuration of this version of the mod, so if you are interested in filtering non-stackable items I recommend you setting it up using the default client/server version of the mod, then bringing its configuration file to your server!  
 However, you'll still need Cloth Config (see below) for the server to start!
@@ -139,8 +138,9 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 
 ## Versions
 
-3.0b - Corrections of texts for Mod Menu (Client/Server version)  
-3.0a - (≥ 1.17.1) Improves the functionality of the sorting book - This is also the first release of the server-side only version!  
+3.1 - Server Side Only version: NBTs are now used and the way to make or unmake a Hopper sticky has changed; Both versions: small change on how a Sticky Hopper filtering non-stackable items works
+3.0b - Correcting texts for Mod Menu (Client/Server version)  
+3.0a - (≥ 1.17.1) Improving the functionality of the sorting book - This is also the first release of the server-side only version!  
 3.0 - (≥ 1.17.1) Adding the ability to filter non-stackable items  
 2.3 - (≥ 1.17) Bugfix: Pickaxe tag added, so it's possible to mine Sticky Hoppers  
 2.2 - Cleaning craft simplified  
