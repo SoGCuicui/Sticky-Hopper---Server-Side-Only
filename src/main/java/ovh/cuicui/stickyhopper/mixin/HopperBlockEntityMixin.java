@@ -13,7 +13,6 @@ import net.minecraft.item.Items;
 import net.minecraft.item.WrittenBookItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;
@@ -56,9 +55,6 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
         }
         return (super.isEmpty());
     }
-
-    @Override
-    public Text getContainerName() { return this.isSticky ? Text.of("Sticky Hopper") : new TranslatableText("container.hopper"); }
 
     @Shadow
     private static native boolean insert(World world, BlockPos pos, BlockState state, Inventory inventory);
@@ -106,12 +102,21 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
             if (((HopperBlockEntityMixin) inventory).isSticky) {
                 if (itemEntity.getStack().isOf(Items.SNOWBALL)) {
                     ((HopperBlockEntityMixin) inventory).isSticky = false;
+                    Text name = ((HopperBlockEntityMixin) inventory).getCustomName();
+                    if (name != null && name.getString().equals("Sticky Hopper")) {
+                        ((HopperBlockEntityMixin) inventory).setCustomName(Text.of(null));
+                    }
+
                     itemEntity.discard();
                     info.setReturnValue(true);
                 }
             } else {
                 if (itemEntity.getStack().isOf(Items.HONEY_BOTTLE)) {
                     ((HopperBlockEntityMixin) inventory).isSticky = true;
+                    if (((HopperBlockEntityMixin) inventory).getCustomName() == null) {
+                        ((HopperBlockEntityMixin) inventory).setCustomName(Text.of("Sticky Hopper"));
+                    }
+
                     itemEntity.setStack(new ItemStack(Items.GLASS_BOTTLE));
                     info.setReturnValue(true);
                 }
