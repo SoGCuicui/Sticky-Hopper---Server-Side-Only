@@ -40,9 +40,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     private boolean needsNonStackableInsert = false;
 
     // For Comparators and Items
-    public boolean isSticky() {
-        return this.isSticky;
-    }
+    public boolean isSticky() { return this.isSticky; }
 
     // A Sticky Hopper is considered empty even if there is still one item in each slot
     @Override

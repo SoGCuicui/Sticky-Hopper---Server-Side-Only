@@ -106,7 +106,7 @@ It basically works the same way as the default client/server version, except tha
 To craft a Sticky Hopper, you have to drop Honey Bottle in a placed Hopper. Yes, your honey farms will be full of these, sorry! ¯\\\_(ツ)\_/¯  
 Like in the normal craft described above, the honey is consumed and the bottle may be absorbed by the Hopper 8 ticks later!  
 It will change its NBTs so the game can differentiate it from normal Hoppers. This NBTs is kept by the item if you break the Hopper, that means it won't stack with normal Hoppers, and more importantly it won't lose its Sticky power.  
-Unless you give it a custom name, the Hopper would appear as "Sticky Hopper" when opening its inventory, but sadly the item can't be renamed. It's also not possible to give it a different texture with a texture pack.
+Unless you give it a custom name, the Hopper would appear as "Sticky Hopper". It's sadly not possible to give it a different texture with a texture pack though.
 
 To uncraft a Sticky Hopper, drop a Snowball on it. Do not try to throw it, or you may just open the Hopper inventory! ;)
 
