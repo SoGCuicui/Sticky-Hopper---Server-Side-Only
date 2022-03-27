@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -30,6 +31,12 @@ public abstract class HopperBlockMixin extends BlockWithEntity {
                 NbtCompound nbt = new NbtCompound();
                 nbt.putBoolean("IsSticky", true);
                 BlockItem.setBlockEntityNbt(itemStack, blockEntity.getType(), nbt);
+
+                nbt = itemStack.getSubNbt("display");
+                if (nbt == null || !nbt.contains("Name", 8)) {
+                    itemStack.setCustomName(Text.of("Sticky Hopper"));
+                }
+
                 Block.dropStack(world, pos, itemStack);
             });
 
