@@ -1,7 +1,6 @@
 package ovh.cuicui.stickyhopper.mixin;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.Hopper;
 import net.minecraft.block.entity.HopperBlockEntity;
@@ -10,34 +9,24 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.WrittenBookItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import org.apache.commons.lang3.ArrayUtils;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ovh.cuicui.stickyhopper.HopperBlockEntityMixinAccessor;
-import ovh.cuicui.stickyhopper.Main;
 
 @Mixin(HopperBlockEntity.class)
 public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntity implements HopperBlockEntityMixinAccessor {
     public HopperBlockEntityMixin(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) { super(blockEntityType, blockPos, blockState); }
 
     private boolean isSticky;
-    private boolean needsNonStackableInsert = false;
 
     // For Comparators and Items
     public boolean isSticky() { return this.isSticky; }
@@ -57,9 +46,6 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
         return (super.isEmpty());
     }
 
-    @Shadow
-    private static native boolean insert(World world, BlockPos pos, BlockState state, Inventory inventory);
-
     // If the NBT does not exist, it will be set to false by default
     @Inject(method = "readNbt", at = @At("TAIL"))
     public void sh_readNbt_tail(NbtCompound nbt, CallbackInfo info) { this.isSticky = nbt.getBoolean("sticky"); }
@@ -77,9 +63,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     @Redirect(method = "insert", at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/Inventory;getStack(I)Lnet/minecraft/item/ItemStack;", ordinal = 0))
     private static ItemStack sh_insert_getStack(Inventory inventory, int slot) {
         ItemStack itemStack = inventory.getStack(slot);
-        if (!((HopperBlockEntityMixin) inventory).isSticky
-         || (((HopperBlockEntityMixin) inventory).needsNonStackableInsert && slot == ArrayUtils.indexOf(Main.config.getRecipe(), "item"))
-         || itemStack.getCount() > 1) {
+        if (!((HopperBlockEntityMixin) inventory).isSticky || itemStack.getCount() > 1) {
             return (itemStack); // Inserts this item
         }
         return (ItemStack.EMPTY); // Ignores it
@@ -117,82 +101,6 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
                     info.setReturnValue(true);
                 }
             }
-        }
-    }
-
-    // ≥ v3.0: If the "recipe" is set, we try to transfer filtered non-stackable item
-    @Inject(method = "transfer(Lnet/minecraft/inventory/Inventory;Lnet/minecraft/inventory/Inventory;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/math/Direction;)Lnet/minecraft/item/ItemStack;", at = @At("HEAD"), cancellable = true)
-    private static void sh_transfer_head(@Nullable Inventory from, Inventory to, ItemStack stack, @Nullable Direction direction, CallbackInfoReturnable<ItemStack> info) {
-        // This "recipe" requires only one item on each slot, so we can use the overridden to.isEmpty() method in this test
-        // Also, the sticky hopper must not to be blocked, otherwise it would normally accept an inserted item (from another hopper) and so we would be forced to accept the transfer
-        if (to instanceof HopperBlockEntity && ((HopperBlockEntityMixin) to).isSticky && Main.config.general.nsif_enabled && to.isEmpty() && ((HopperBlockEntity) to).getCachedState().get(HopperBlock.ENABLED) && stack.getMaxCount() == 1) {
-            String[] recipe = Main.config.getRecipe();
-            int filteredSlot = ArrayUtils.indexOf(recipe, "item");
-            int bookSlot = ArrayUtils.indexOf(recipe, "book");
-
-            for (int index = 0; index < 5; ++index) {
-                ItemStack invStack = to.getStack(index);
-                if (index == filteredSlot) {
-                    if (invStack.getMaxCount() > 1) {
-                        return; // Wrong recipe, continue normal execution
-                    }
-                } else if (index == bookSlot) {
-                    if (!invStack.isOf(Items.WRITABLE_BOOK) && !invStack.isOf(Items.WRITTEN_BOOK)) {
-                        return; // Wrong recipe, continue normal execution
-                    }
-                } else {
-                    try {
-                        if (!invStack.isOf(Registry.ITEM.get(new Identifier(recipe[index])))) {
-                            return; // Wrong recipe, continue normal execution
-                        }
-                    } catch (InvalidIdentifierException exception) {
-                        return; // Wrong config, continue normal execution
-                    }
-                }
-            }
-
-            if (!stack.isOf(to.getStack(filteredSlot).getItem())) {
-                info.setReturnValue(stack); // Incoming item rejected, transfer cancelled
-                return;
-            }
-
-            boolean durability = Main.config.permissions.nsif_allows_diff_durability;
-            boolean enchantments = Main.config.permissions.nsif_allows_diff_enchantment;
-            boolean potionEffect = Main.config.permissions.nsif_allows_diff_potion_effect;
-            boolean name = Main.config.permissions.nsif_allows_diff_name;
-            if (bookSlot >= 0) {
-                ItemStack book = to.getStack(bookSlot);
-                if (WrittenBookItem.getPageCount(book) > 0) { // We check only the first page
-                    String text = book.getNbt().getList("pages", 8).getString(0);
-                    durability = durability && text.contains(Main.config.book.nsif_durability_keyword.length() > 0 ? Main.config.book.nsif_durability_keyword : "Durability");
-                    enchantments = enchantments && text.contains(Main.config.book.nsif_enchantment_keyword.length() > 0 ? Main.config.book.nsif_enchantment_keyword : "Enchantment");
-                    potionEffect = potionEffect && text.contains(Main.config.book.nsif_potion_effect_keyword.length() > 0 ? Main.config.book.nsif_potion_effect_keyword : "Potion");
-                    name = name && text.contains(Main.config.book.nsif_name_keyword.length() > 0 ? Main.config.book.nsif_name_keyword : "Name");
-                } else {
-                    durability = enchantments = potionEffect = name = false;
-                }
-            }
-
-            ItemStack filteredStack = to.getStack(filteredSlot);
-            if ((!durability && stack.getDamage() != filteredStack.getDamage())
-             || (!enchantments && !stack.getEnchantments().equals(filteredStack.getEnchantments()))
-             || (!potionEffect && !stack.getNbt().getString("Potion").equals(filteredStack.getNbt().getString("Potion")))
-             || (!name && !stack.getName().equals(filteredStack.getName()))) {
-                info.setReturnValue(stack); // Incoming item rejected, transfer cancelled
-                return;
-            }
-
-            ((HopperBlockEntityMixin) to).needsNonStackableInsert = true;
-            boolean nonStackableInserted = insert(((HopperBlockEntity) to).getWorld(), ((HopperBlockEntity) to).getPos(), ((HopperBlockEntity) to).getCachedState(), to);
-            ((HopperBlockEntityMixin) to).needsNonStackableInsert = false;
-
-            // Last but not least, if the non-stackable item can't be inserted to another inventory we cancel the transfer, otherwise the item would get lost
-            if (!nonStackableInserted) {
-                info.setReturnValue(stack); // Transfer cancelled
-                return;
-            }
-            to.setStack(filteredSlot, stack);
-            info.setReturnValue(ItemStack.EMPTY); // Incoming item accepted, transfer done
         }
     }
 }

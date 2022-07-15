@@ -36,7 +36,7 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
                 Block.dropStack(world, pos, itemStack);
             });
 
-            state.onStacksDropped((ServerWorld)world, pos, stack);
+            state.onStacksDropped((ServerWorld)world, pos, stack, false);
             info.cancel();
         }
     }
