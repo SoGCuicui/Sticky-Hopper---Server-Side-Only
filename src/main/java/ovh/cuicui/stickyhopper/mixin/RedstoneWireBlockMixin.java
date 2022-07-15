@@ -23,7 +23,6 @@ public abstract class RedstoneWireBlockMixin extends Block {
     private void sh_canRunOnTop_return(BlockView world, BlockPos pos, BlockState floor, CallbackInfoReturnable<Boolean> info) {
         if (floor.isOf(Main.STICKY_HOPPER_BLOCK)) {
             info.setReturnValue(true);
-            info.cancel();
         }
     }
 }
