@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -29,8 +28,10 @@ public abstract class BlockMixin extends AbstractBlock implements ItemConvertibl
         if (blockEntity instanceof HopperBlockEntity && ((HopperBlockEntityMixinAccessor) blockEntity).isSticky()) {
             Block.getDroppedStacks(state, (ServerWorld)world, pos, blockEntity).forEach((itemStack) -> {
                 NbtCompound nbt = new NbtCompound();
-                nbt.putBoolean("IsSticky", true);
-                BlockItem.setBlockEntityNbt(itemStack, blockEntity.getType(), nbt);
+                nbt.putBoolean("sticky", true);
+                itemStack.setSubNbt("BlockEntityTag", nbt);
+
+                itemStack.setRepairCost(0); // Renamed items have that...
 
                 Block.dropStack(world, pos, itemStack);
             });

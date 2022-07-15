@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.WrittenBookItem;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
@@ -61,15 +62,13 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
 
     // If the NBT does not exist, it will be set to false by default
     @Inject(method = "readNbt", at = @At("TAIL"))
-    public void sh_readNbt_tail(NbtCompound nbt, CallbackInfo info) {
-        this.isSticky = nbt.getBoolean("IsSticky");
-    }
+    public void sh_readNbt_tail(NbtCompound nbt, CallbackInfo info) { this.isSticky = nbt.getBoolean("sticky"); }
 
     // If the Hopper is not sticky, we don't write the NBT, so it is like any new, "virgin" Hoppers
     @Inject(method = "writeNbt", at = @At("TAIL"))
     protected void sh_writeNbt_tail(NbtCompound nbt, CallbackInfo info) {
         if (this.isSticky) {
-            nbt.putBoolean("IsSticky", true);
+            nbt.putBoolean("sticky", true);
         }
     }
 
@@ -102,10 +101,7 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
             if (((HopperBlockEntityMixin) inventory).isSticky) {
                 if (itemEntity.getStack().isOf(Items.SNOWBALL)) {
                     ((HopperBlockEntityMixin) inventory).isSticky = false;
-                    Text name = ((HopperBlockEntityMixin) inventory).getCustomName();
-                    if (name != null && name.getString().equals("Sticky Hopper")) {
-                        ((HopperBlockEntityMixin) inventory).setCustomName(Text.of(null));
-                    }
+                    ((HopperBlockEntityMixin) inventory).setCustomName(null);
 
                     itemEntity.discard();
                     info.setReturnValue(true);
@@ -113,9 +109,9 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
             } else {
                 if (itemEntity.getStack().isOf(Items.HONEY_BOTTLE)) {
                     ((HopperBlockEntityMixin) inventory).isSticky = true;
-                    if (((HopperBlockEntityMixin) inventory).getCustomName() == null) {
-                        ((HopperBlockEntityMixin) inventory).setCustomName(Text.of("Sticky Hopper"));
-                    }
+                    MutableText name = ((MutableText) Text.of("Sticky Hopper"));
+                    name.fillStyle(name.getStyle().withItalic(false));
+                    ((HopperBlockEntityMixin) inventory).setCustomName(name);
 
                     itemEntity.setStack(new ItemStack(Items.GLASS_BOTTLE));
                     info.setReturnValue(true);
