@@ -22,33 +22,21 @@ But since Sticky Hoppers keep one item each, they do not actually transfer anyth
 # Craft
 
 A Honey Bottle on top of a normal Hopper. That's it! ¯\\\_(ツ)\_/¯  
-![](https://media.forgecdn.net/attachments/373/562/sticky_hopper_craft.png)  
+![](https://cdn.modrinth.com/data/SAqTREFl/images/59b627ded86ec63c71c7ab494a74eca903246781.png)  
 Of course, it gives the empty Glass Bottle back!
 
 It is also possible to clean up a Sticky Hopper, just place a Snowball on top of it.  
-![](https://media.forgecdn.net/attachments/374/102/hopper_craft.png)  
+![](https://cdn.modrinth.com/data/SAqTREFl/images/5c99ddd8763d01904144c7206a6e6d920440dda2.png)  
 *Didn't you know that snow cleans honey much better than a water bucket or a water bottle? The legend says that it is because the latter are not stackable!*
 
-
-# Server-Side Only
-
-**Since version 3.0a**, for Minecraft ≥ 1.17.1, this mod exists in a "server-side only" version!  
-It basically works the same way as the default "client/server" version, except that it does not add a new block with its own texture and stuff, but use default Hoppers instead.
-
-To craft a Sticky Hopper, you have to drop Honey Bottle in a placed Hopper. Yes, your honey farms will be full of these, sorry! ¯\\\_(ツ)\_/¯  
-Like in the normal craft described above, the honey is consumed and the bottle may be absorbed by the Hopper 8 ticks later!  
-It will change its NBTs so the game can differentiate it from normal Hoppers. This NBTs is kept by the item if you break the Hopper, that means it won't stack with normal Hoppers, and more importantly it won't lose its Sticky power.  
-Unless you give it a custom name, the Hopper would appear as "Sticky Hopper" when opening its inventory, but sadly the corresponding item can't be renamed. It's also not possible to give it a different texture with a texture pack.
-
-To uncraft a Sticky Hopper, drop a Snowball on it. Do not try to throw it... or you may just open the Hopper inventory! ;)
+Please note that [a "server-side only" version exists](https://modrinth.com/mod/sticky-hopper-sso), so you can choose which one is right for you.
 
 
 # Installation
 
-As the default client/server version adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the Sticky Hopper.  
-Otherwise you can use the server-side only version.
+As this "client / server" version adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the Sticky Hopper.
 
-The minimum requirements are, of course, the [Fabric launcher](https://fabricmc.net/use/) and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
+The minimum requirements are, of course the [Fabric launcher](https://fabricmc.net/use/), and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
 
 
@@ -57,12 +45,12 @@ The minimum requirements are, of course, the [Fabric launcher](https://fabricmc.
 This mod is translated in English and French.  
 You are free to use this mod in any modpacks you'd make.
 
-This mod works without conflict with my other mod "[Speedy Hopper](https://www.curseforge.com/minecraft/mc-mods/speedy-hopper)", but of course you won't be able to craft a "Fast Sticky Hopper", so you'll have to make choices and design your contraptions accordingly!
+This mod works without conflict with my other mod "[Speedy Hopper](https://modrinth.com/mod/speedy-hopper)", but of course you won't be able to craft a "Fast Sticky Hopper", so you'll have to make choices and design your contraptions accordingly!
 
 I don't plan to adapt it for another modloader than Fabric.  
 Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraft/sticky-hopper/-/boards), and also at [the interesting ideas and suggestions](https://dev.cuicui.ovh/minecraft/sticky-hopper/-/wikis/Ideas) I've received, to see what is likely to happen sooner or later!
 
-*Hope you'll find this mod usefull! ♥ Also, feel free to take a look at [my other mods](https://www.curseforge.com/members/cuicui_off/projects)!*
+*Hope you'll find this mod usefull! ♥ Also, feel free to take a look at [my other mods](https://modrinth.com/user/SoGCuicui)!*
 
 
 ## Versions
