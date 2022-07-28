@@ -1,6 +1,7 @@
 package ovh.cuicui.stickyhopper.mixin;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.block.HopperBlock;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.Hopper;
 import net.minecraft.block.entity.HopperBlockEntity;
@@ -10,10 +11,14 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,7 +31,9 @@ import ovh.cuicui.stickyhopper.HopperBlockEntityMixinAccessor;
 public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntity implements HopperBlockEntityMixinAccessor {
     public HopperBlockEntityMixin(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) { super(blockEntityType, blockPos, blockState); }
 
-    private boolean isSticky;
+    private boolean isSticky = false;
+    private static final Random RANDOM = Random.create();
+    private int particleCooldown = 0;
 
     // For Comparators and Items
     public boolean isSticky() { return this.isSticky; }
@@ -55,6 +62,41 @@ public abstract class HopperBlockEntityMixin extends LootableContainerBlockEntit
     protected void sh_writeNbt_tail(NbtCompound nbt, CallbackInfo info) {
         if (this.isSticky) {
             nbt.putBoolean("sticky", true);
+        }
+    }
+
+    @Inject(method = "serverTick", at = @At("HEAD"))
+    private static void sh_serverTick_head(World world, BlockPos pos, BlockState state, HopperBlockEntity blockEntity, CallbackInfo info) {
+        HopperBlockEntityMixin hopper = (HopperBlockEntityMixin) (Inventory) blockEntity;
+        if (!world.isClient && hopper.isSticky) {
+            if (hopper.particleCooldown > 0) {
+                --hopper.particleCooldown;
+            } else if (RANDOM.nextBetween(0, 100) == 50) {
+                Direction direction = state.get(HopperBlock.FACING);
+                double x = pos.getX() + 0.5;
+                double y = pos.getY();
+                double z = pos.getZ() + 0.5;
+                double deltaX = 0.035;
+                double deltaZ = 0.035;
+                if (direction != Direction.DOWN) {
+                    y += 0.2;
+                    if (direction == Direction.NORTH) {
+                        z -= 0.5;
+                        deltaZ = 0.005;
+                    } else if (direction == Direction.SOUTH) {
+                        z += 0.5;
+                        deltaZ = 0.005;
+                    } else if (direction == Direction.EAST) {
+                        x += 0.5;
+                        deltaX = 0.005;
+                    } else if (direction == Direction.WEST) {
+                        x -= 0.5;
+                        deltaX = 0.005;
+                    }
+                }
+                ((ServerWorld) world).spawnParticles(ParticleTypes.FALLING_HONEY, x, y, z, 1, deltaX, 0.0, deltaZ, 0.0);
+                hopper.particleCooldown = 20;
+            }
         }
     }
 
