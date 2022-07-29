@@ -25,10 +25,10 @@ As this version is "server-side only" (SSO), there are obviously no craft availa
 [A "client / server" version exists](https://modrinth.com/mod/sticky-hopper), so you can choose which one is right for you. 
 
 To craft a Sticky Hopper in this SSO version, you have to drop a Honey Bottle in a placed Hopper. Yes, your honey farms will be full of these, sorry! ¯\\\_(ツ)\_/¯  
-The honey is consumed and the bottle may be absorbed by the Hopper 8 ticks later!
+The honey is consumed and the bottle may be absorbed by the hopper 8 ticks later!
 
-It will change its NBTs so the game can differentiate it from normal Hoppers. This NBTs is kept by the item if you break the Hopper, that means it won't stack with normal Hoppers, and more importantly it won't lose its Sticky power.  
-Unless you give it a custom name, the Hopper would appear as "Sticky Hopper" when opening its inventory, but sadly the corresponding item can't be renamed. It's also not possible to give it a different texture with a texture pack.
+Unless you give it a custom name, the hopper will appear as "Sticky Hopper" when opening its inventory, and its associated item will be renamed identically (with no italic font).  
+I believe that it's sadly not possible to give it a different texture with a texture pack, but a few honey particles will fall from the exit of the Sticky Hopper, when placed.
 
 To uncraft a Sticky Hopper, drop a Snowball on it. Do not try to throw it... or you may just open the Hopper inventory! ;)  
 *Didn't you know that snow cleans honey much better than a water bucket or a water bottle? The legend says that it is because the latter are not stackable!*
@@ -38,13 +38,14 @@ To uncraft a Sticky Hopper, drop a Snowball on it. Do not try to throw it... or 
 
 Players obviously don't have to install this "server-side only" version client-side, unless it is to be used offline.
 
-The minimum requirements are, of course the [Fabric launcher](https://fabricmc.net/use/), and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
+The minimum requirements are, of course the [Fabric launcher](https://fabricmc.net/use/), and the [Fabric API](https://modrinth.com/mod/fabric-api), and to copy the ".jar" file into your mods folder.  
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
 
 
 # Miscellaneous
 
-This mod is translated in English and French.  
+Performance of Sticky Hoppers is similar to that of vanilla Hoppers (tested with Carpet Mod, on over 2500 idle normal and Sticky hoppers).
+
 You are free to use this mod in any modpacks you'd make.
 
 This mod works without conflict with my other mod "[Speedy Hopper](https://modrinth.com/mod/speedy-hopper)", but of course you won't be able to craft a "Fast Sticky Hopper", so you'll have to make choices and design your contraptions accordingly!
@@ -57,20 +58,14 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 
 ## Versions
 
-4.0 - (≥ 1.19) As the new Allay mob can be used to sort non-stackable items, this feature has been removed from this mod, so it is more vanilla-friendly again!  
-3.1 - Server Side Only version: NBTs are now used and the way to make or unmake a Hopper sticky has changed; Both versions: small change on how a Sticky Hopper filtering non-stackable items works  
-3.0b - Correcting texts for Mod Menu (Client/Server version)  
-3.0a - (≥ 1.17.1) Improving the functionality of the sorting book - This is also the first release of the server-side only version!  
-3.0 - (≥ 1.17.1) Adding the ability to filter non-stackable items  
-2.3 - (≥ 1.17) Bugfix: Pickaxe tag added, so it's possible to mine Sticky Hoppers!  
-2.2 - Cleaning craft simplified  
-2.1 - Non-stackable items can finally be retained (but not filtered); Clean up craft added  
-2.0 - Comparators management; Transfer cooldown bugfix  
-1.0 - Initial project with operational Sticky Hoppers
+4.1 - Honey particles now randomly fall from the exit of Sticky Hoppers  
+4.0 - As the new Allay mob can be used to sort non-stackable items, this feature has been removed from this mod, so it is more vanilla-friendly again!  
+3.1 - NBTs are now used and the way to make or unmake a Hopper sticky has changed; Small changes on how a Sticky Hopper filtering non-stackable items works  
+3.0a - Improving the functionality of the sorting book - This is also the first release of the server-side only version!  
 
 
 ## Known Incompatibilities
 
-- _Lithium (≥ 1.17 only)_:  
+- _Lithium_:  
   Hoppers optimisations added in Lithium make Sticky Hoppers act like normal Hoppers!  
-  I may work on this problem at some point... In the meantime, my mod disables these optimizations for Minecraft 1.17.1 (if you are using it for 1.17, just add `mixin.block.hopper=false` in "config/lithium.properties" yourself).
+  I may work on this problem at some point... In the meantime, my mod disables these optimizations.
