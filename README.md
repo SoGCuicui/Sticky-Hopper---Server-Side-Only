@@ -36,11 +36,13 @@ Please note that [a "server-side only" version exists](https://modrinth.com/mod/
 
 As this "client / server" version adds a new block, if you want to use it on a server, clients should have it too, so they can see and craft the Sticky Hopper.
 
-The minimum requirements are, of course the [Fabric launcher](https://fabricmc.net/use/), and the [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and to copy the ".jar" file into your mods folder.  
+The minimum requirements are, of course the [Fabric launcher](https://fabricmc.net/use/), and the [Fabric API](https://modrinth.com/mod/fabric-api), and to copy the ".jar" file into your mods folder.  
 (For default Windows installations, after running the game with the Fabric launcher at least once, just copy / paste this into the path bar of any Explorer window to open the mod folder: `%appdata%\.minecraft\mods` — and press *Enter*.)
 
 
 # Miscellaneous
+
+Performance of Sticky Hoppers is similar to that of vanilla Hoppers, if not slightly better (tested with Carpet Mod, on over 2500 idle normal and Sticky hoppers).
 
 This mod is translated in English and French.  
 You are free to use this mod in any modpacks you'd make.
@@ -55,12 +57,12 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 
 ## Versions
 
-4.0 - (≥ 1.19) As the new Allay mob can be used to sort non-stackable items, this feature has been removed from this mod, so it is more vanilla-friendly again!  
-3.1 - Server Side Only version: NBTs are now used and the way to make or unmake a Hopper sticky has changed; Both versions: small change on how a Sticky Hopper filtering non-stackable items works  
-3.0b - Correcting texts for Mod Menu (Client/Server version)  
-3.0a - (≥ 1.17.1) Improving the functionality of the sorting book - This is also the first release of the server-side only version!  
-3.0 - (≥ 1.17.1) Adding the ability to filter non-stackable items  
-2.3 - (≥ 1.17) Bugfix: Pickaxe tag added, so it's possible to mine Sticky Hoppers!  
+4.0 - As the new Allay mob can be used to sort non-stackable items, this feature has been removed from this mod, so it is more vanilla-friendly again!  
+3.1 - Small changes on how a Sticky Hopper filtering non-stackable items works  
+3.0b - Correcting texts for Mod Menu  
+3.0a - Improving the functionality of the sorting book - This is also the first release of the server-side only version!  
+3.0 - Adding the ability to filter non-stackable items  
+2.3 - Bugfix: Pickaxe tag added, so it's possible to mine Sticky Hoppers!  
 2.2 - Cleaning craft simplified  
 2.1 - Non-stackable items can finally be retained (but not filtered); Clean up craft added  
 2.0 - Comparators management; Transfer cooldown bugfix  
@@ -69,12 +71,12 @@ Please take a look at the current [issues board](https://dev.cuicui.ovh/minecraf
 
 ## Known Incompatibilities
 
-- _Lithium (≥ 1.17 only)_:  
+- _Lithium_:  
   Hoppers optimisations added in Lithium make Sticky Hoppers act like normal Hoppers!  
-  I may work on this problem at some point... In the meantime, my mod disables these optimizations for Minecraft 1.17.1 (if you are using it for 1.17, just add `mixin.block.hopper=false` in "config/lithium.properties" yourself).
+  I may work on this problem at some point... In the meantime, my mod disables these optimizations.
 - _Vanilla Tweaks - Resource Packs_:  
-  I've found two [Vanilla Tweaks resource packs](https://vanillatweaks.net/picker/resource-packs/) that have small compatibility issues, due to the change in texture of the Sticky Hoppers for the client/server version.  
-  => _Directional Hoppers_ normally displays an arrow inside the hopper if it is not pointing down. It does not appear in Sticky Hoppers because of the texture of the honey.  
+  I've found two [Vanilla Tweaks resource packs](https://vanillatweaks.net/picker/resource-packs/) that have small compatibility issues, due to the change in texture of the Sticky Hoppers for this client/server version.  
+  => _Directional Hoppers_ normally displays an arrow inside the hopper if it is not pointing down. It does not appear in Sticky Hoppers because of the custom texture of the honey.  
   => _3D Items_, more annoying, changes the model used for items (in the hotbar, in the hand, and also for items dropped on the ground), and unfortunately the honey texture does not appear at all.  
   Here are screenshots to illustrate those issues (without resource packs, with _Directional Hoppers_, and with _3D Items_):  
   ![](https://media.forgecdn.net/attachments/401/587/resource_pack_no.png)
